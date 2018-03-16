@@ -43,3 +43,22 @@ $(function () {
     findTickets();
 
 });
+
+
+
+var houston = { lat: 29.7604, lng: -95.3698 };
+
+var map;
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: houston,
+        zoom: 5
+    });
+
+    var marker = new google.maps.Marker({
+        position: houston,
+        map: map
+    });
+}
+
+
