@@ -42,7 +42,7 @@
             async: true,
             dataType: "json",
             success: function (json) {
-                // console.log(json._embedded.events);
+                console.log(json._embedded.events);
 
             },
             error: function (xhr, status, err) {
