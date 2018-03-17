@@ -1,0 +1,44 @@
+
+body{
+    background-color:#7bb5a1;
+}
+
+#gm-input {
+    margin-bottom: 0px;
+}
+
+.btn {
+    margin: 5px;
+}
+
+#gm-row {
+    background-color: #f4fffe;
+    padding: 0px 14px;
+}
+
+#tm-row {
+    background-color: #e0fcf9;
+}
+
+#wp-row {
+    background-color: #c6efeb;
+}
+
+.row {
+    margin: 0px;
+}
+
+.nice-color {
+    background-color: #153834;
+}
+
+nav .brand-logo {
+    font-family: 'Poiret One', 'Buda', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 4.5rem;
+}
+
+nav ul a {
+    font-family: 'open sans', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: .8rem;
+    color: #e0fcf9;
+}
