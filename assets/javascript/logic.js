@@ -25,6 +25,9 @@
         e.keyCode = 37;
         $("#tm-feed").trigger(e);
     });
+
+    //this initializes the wiki carousel
+    $('.carousel.carousel-slider').carousel({fullWidth: true});
     // ---------------------
     // ticket master API AJAX call function
     // Chrome and Opera browswers show error codes that M70 and Opera 57  (started March 15, 2018); the call is still functional
