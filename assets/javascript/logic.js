@@ -9,8 +9,7 @@
     var cityCode;
     var stateCode;
     var zipCode;
-    var geoLat;
-    var geoLng;
+ 
     var countryCode = "US"; //Can be removed if desired
     var ticketmaster_queryURL;
     // ---------------------
@@ -65,20 +64,21 @@
 
         if (regexp1.test(location)) {
             console.log("city, state");
-            location = location.replace(/,\s?/g, " ");
-            location = location.split(" ");
+            //location = location.replace(/,\s?/g, " ");
+            location = location.split(",");
             cityCode = location[0];
             stateCode = location[1];
             console.log(cityCode);
             console.log(stateCode);
             InputType = 1;
-            findGeo(InputType, cityCode, stateCode);
+            
         } else if (regexp2.test(location)) {
             console.log("zip");
             zipCode = location;
             InputType = 2;
-            findGeo(InputType, zipCode);
+            
         }
+        findGeo(location);
         findTickets();
     });
     // ---------------------
@@ -97,20 +97,17 @@
 
 
 
-var houston = { lat: 29.7604, lng: -95.3698 };
-var map;
-var gm_APIKey = "AIzaSyC7qKO6Pu0BX0_Hh7xtqJrFBqCR1hxegDo";
 
-function findGeo(type, p1, p2="") {
-    var geo_queryURL;
-    //if InputType = city,state
-    if (type === 1){
-         geo_queryURL = "https://maps.googleapis.com/maps/api/geocode/json?locality=" + p1 + "administrative_area_level_1=" + p2 + "key=" + gm_APIKey;
-    }
-    //else InputType = zip
-    else {
-        geo_queryURL = "https://maps.googleapis.com/maps/api/geocode/json?postal_code=" + p1 + "key=" + gm_APIKey;
-    }
+var gm_map;
+var gm_APIKey = "AIzaSyDFIsRYpp6K-0m9E21Mtng6wm-FWmY3h3Q";
+var gm_geoLat = 40.7127753; 
+var gm_geoLng = -74.0059728;
+var gm_searchLocation;
+var gm_marker;
+
+function findGeo(address) {
+
+    geo_queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=" + gm_APIKey;
 
     $.ajax({
         type: "GET",
@@ -119,9 +116,11 @@ function findGeo(type, p1, p2="") {
         dataType: "json",
         success: function (response) {
             console.log(response.results);
-            geoLat = response.result[0].location.lat;
-            geoLng = response.result[0].location.lng;
-            console.log("Lat:" + geoLat + ", Lng:" + geoLng);
+            gm_geoLat = response.results[0].geometry.location.lat;
+            gm_geoLng = response.results[0].geometry.location.lng;
+           
+            console.log("Location: " + gm_geoLat, ", " + gm_geoLng);
+            updatePosition();
 
         },
         error: function (xhr, status, err) {
@@ -131,15 +130,21 @@ function findGeo(type, p1, p2="") {
 }
 
 function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: houston,
-        zoom: 5
+    gm_searchLocation = new google.maps.LatLng(gm_geoLat, gm_geoLng);
+    gm_map = new google.maps.Map(document.getElementById('map'), {
+        center: gm_searchLocation,
+        zoom: 8
     });
 
-    var marker = new google.maps.Marker({
-        position: houston,
-        map: map
+    gm_marker = new google.maps.Marker({
+        position: gm_searchLocation,
+        map: gm_map
     });
 }
 
+function updatePosition() {
+    gm_searchLocation = new google.maps.LatLng(gm_geoLat, gm_geoLng);
+    gm_marker.setPosition(gm_searchLocation);
+    gm_map.setCenter(gm_searchLocation);
+}
 
