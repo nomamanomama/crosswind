@@ -3,7 +3,7 @@ body{
     background-color:#7bb5a1;
 }
 
-#gm-input {
+#gm-input-location {
     margin-bottom: 0px;
 }
 
@@ -18,6 +18,10 @@ body{
 
 #tm-row {
     background-color: #e0fcf9;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #wp-row {
@@ -48,3 +52,49 @@ nav ul a {
     height: 400px;
     background-color: grey;
 }
+
+.tm-card {
+    min-width: 250px;
+    margin: 10px;
+
+}
+
+#tm-feed {
+    display: flex;
+    min-width: 100%;
+    min-height: 200px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+#left-scroll {
+z-index: 100;
+display: flex;
+  }
+
+#left-scroll-col {
+height:388px;
+display: flex;
+flex-direction: column;
+justify-content:center;
+align-items: center;
+}
+
+#right-scroll {
+    padding:0rem;
+      }
+
+
+.row .col.s1{
+    width:0;
+}
+
+.row .col{
+    padding:0px;
+}
+/* 
+Can hide scroll bar if we come up with alt ui */
+
+  /* #tm-feed::-webkit-scrollbar {
+    display: none;
+  } */
