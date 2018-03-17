@@ -15,8 +15,17 @@
     var ticketmaster_queryURL;
     // ---------------------
 
+    // this makes the side bar open in mobile view
+    $(".button-collapse").sideNav();
 
-
+    // tm scroll buttons, NOT CURRENTLY WORKING
+    $("#left-scroll").on("click", function(){
+        console.log("Left scroll was clicked!");
+        var e = jQuery.Event("keyup");
+        $("#tm-feed").focus();
+        e.keyCode = 37;
+        $("#tm-feed").trigger(e);
+    });
     // ---------------------
     // ticket master API AJAX call function
     // Chrome and Opera browswers show error codes that M70 and Opera 57  (started March 15, 2018); the call is still functional
