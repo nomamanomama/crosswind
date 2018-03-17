@@ -9,6 +9,8 @@
     var cityCode;
     var stateCode;
     var zipCode;
+    var geoLat;
+    var geoLng;
     var countryCode = "US"; //Can be removed if desired
     var ticketmaster_queryURL;
     // ---------------------
@@ -61,10 +63,12 @@
             console.log(cityCode);
             console.log(stateCode);
             InputType = 1;
+            findGeo(InputType, cityCode, stateCode);
         } else if (regexp2.test(location)) {
             console.log("zip");
             zipCode = location;
             InputType = 2;
+            findGeo(InputType, zipCode);
         }
         findTickets();
     });
@@ -85,8 +89,38 @@
 
 
 var houston = { lat: 29.7604, lng: -95.3698 };
-
 var map;
+var gm_APIKey = "AIzaSyC7qKO6Pu0BX0_Hh7xtqJrFBqCR1hxegDo";
+
+function findGeo(type, p1, p2="") {
+    var geo_queryURL;
+    //if InputType = city,state
+    if (type = 1){
+         geo_queryURL = "https://maps.googleapis.com/maps/api/geocode/json?locality=" + p1 + "administrative_area_level_1=" + p2 + "key=" + gm_APIKey;
+    }
+    //else InputType = zip
+    else {
+        geo_queryURL = "https://maps.googleapis.com/maps/api/geocode/json?postal_code=" + p1 + "key=" + gm_APIKey;
+    }
+
+    $.ajax({
+        type: "GET",
+        url: geo_queryURL,
+        async: true,
+        dataType: "json",
+        success: function (response) {
+            console.log(response.results);
+            geoLat = response.result[0].location.lat;
+            geoLng = response.result[0].location.lng;
+            console.log("Lat:" + geoLat + ", Lng:" + geoLng);
+
+        },
+        error: function (xhr, status, err) {
+            // This time, we do not end up here!
+        }
+    });
+}
+
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: houston,

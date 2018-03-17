@@ -65,19 +65,19 @@
                             type="tel"  -->
                         <input 
                         class="validate" 
-                        id="gm-input location" 
+                        id="gm-input-location" 
                         placeholder="New York, NY" 
                         type="text" 
                         title="City Name, 2-Digit State Code  or 5-Digit Zip Code"
                         pattern= "(([0-9]{5})|([\w ]+, \w{2}))"> 
-                        <label for="location">City, State or Zip Code</label>
+                        <label for="gm-input-location">City, State or Zip Code</label>
                     </div>
                 </div>
             </div>
         </form>
         <!-- GOOGLE MAPS -->
-        <div class="container">
-            <img class="responsive-img z-depth-2" src="./assets/images/gm-placeholder.jpg" alt="Google Maps">
+        <div class="container" id="map">
+            <!-- <img class="responsive-img z-depth-2" src="./assets/images/gm-placeholder.jpg" alt="Google Maps"> -->
         </div>
     </div>
     <!-- TICKET MASTER ROW BEGINS HERE -->
@@ -193,8 +193,7 @@
         </div>
     </div>
     </div>
-    <!-- temp div to hold map     -->
-    <div id="map"></div>
+
 
 
 <!-- JQuery -->
