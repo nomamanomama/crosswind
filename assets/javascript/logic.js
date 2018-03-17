@@ -42,7 +42,7 @@
             async: true,
             dataType: "json",
             success: function (json) {
-                console.log(json._embedded.events);
+                // console.log(json._embedded.events);
 
             },
             error: function (xhr, status, err) {
@@ -52,34 +52,47 @@
     }
     // ---------------------
 
+
+function getWiki() {
+    $.getJSON("https://en.wikipedia.org/w/api.php?action=query&format=json&gsrlimit=15&generator=search&origin=*&gsrsearch=" + cityCode+"+"+stateCode, function(data){
+        console.log(data);
+        
+    });
+}
+
+
     // ---------------------
     $("form").on("submit", function (e) {
         event.preventDefault();
         var location = $("input").val();
         regexp1 = /[\w ]+, \w{2}/;
         regexp2 = /\d{5}/;
-        console.log(location);
-        console.log(regexp1.test(location))
-        console.log(regexp2.test(location))
+        // console.log(location);
+        // console.log(regexp1.test(location))
+        // console.log(regexp2.test(location))
 
         if (regexp1.test(location)) {
+
+
             console.log("city, state");
             //location = location.replace(/,\s?/g, " ");
             location = location.split(",");
+
             cityCode = location[0];
             stateCode = location[1];
-            console.log(cityCode);
-            console.log(stateCode);
+            // console.log(cityCode);
+            // console.log(stateCode);
             InputType = 1;
             
         } else if (regexp2.test(location)) {
-            console.log("zip");
+            // console.log("zip");
             zipCode = location;
             InputType = 2;
             
         }
         findGeo(location);
         findTickets();
+        getWiki();
     });
     // ---------------------
 
