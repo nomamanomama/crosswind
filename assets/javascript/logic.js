@@ -95,7 +95,7 @@ var gm_APIKey = "AIzaSyC7qKO6Pu0BX0_Hh7xtqJrFBqCR1hxegDo";
 function findGeo(type, p1, p2="") {
     var geo_queryURL;
     //if InputType = city,state
-    if (type = 1){
+    if (type === 1){
          geo_queryURL = "https://maps.googleapis.com/maps/api/geocode/json?locality=" + p1 + "administrative_area_level_1=" + p2 + "key=" + gm_APIKey;
     }
     //else InputType = zip
