@@ -42,3 +42,9 @@ nav ul a {
     font-size: .8rem;
     color: #e0fcf9;
 }
+
+#map {
+    width: 100%;
+    height: 400px;
+    background-color: grey;
+}
