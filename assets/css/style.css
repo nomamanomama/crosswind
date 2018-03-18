@@ -28,6 +28,10 @@ body{
     background-color: #c6efeb;
 }
 
+#wp-2-row {
+    background-color: #a1d1cc;
+}
+
 .row {
     margin: 0px;
 }
@@ -99,3 +103,35 @@ Can hide scroll bar if we come up with alt ui */
     display: none;
   } */
 
+  .carousel .indicators .indicator-item.active{
+      background-color: #153834;
+  }
+
+  .carousel .indicators .indicator-item{
+      background-color: rgba(15, 112, 96, 0.5);
+  }
+
+  .wp-title {
+      text-align: left;
+  }
+
+  .wp-content {
+      text-align: left;
+      margin-bottom: 50px;
+  }
+
+  .wp-card{
+      overflow-y: auto;
+      max-height: 400px;
+  }
+
+  .card .card-content .wp-card{
+    padding:50px;
+  }
+
+  .carousel .indicators {
+      padding:0;
+      margin:0;
+      background-color: #ffffff;
+
+  }
