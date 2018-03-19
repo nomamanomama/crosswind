@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Poiret+One" rel="stylesheet">
+    <!-- Firebase Style Sheet -->
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css" />
     <!-- Style Sheet -->
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
 
@@ -28,7 +30,7 @@
             </a>
             <ul id="nav-mobile" class="left hide-on-med-and-down">
                 <li>
-                    <a href="#">LOG IN</a>
+                    <a class="waves-effect waves-light btn modal-trigger" href="#loginmodal">LOG IN</a>
                 </li>
                 <li>
                     <a href="#">ABOUT</a>
@@ -51,7 +53,17 @@
             </ul>
         </div>
     </nav>
-    <!-- SERACH BAR -->
+    <!-- Firebase sign-in widget-->
+    <div id="loginmodal" class="modal">
+        <div class="modal-content">
+            <div id="firebaseui-auth-container"></div>
+            <div id="loader">Loading...</div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+        </div>
+    </div>
+    <!-- SEARCH BAR -->
     <div class="row" id="gm-row">
         <div class="input-field col" id="gm-scearchbar"></div>
         <form class="col s12">
@@ -83,7 +95,7 @@
         <div class="container">
             <div class="row">
                 <div class="col s1 hide-on-med-and-down" id="left-scroll-col">
-                    <a class="btn-floating red btn-large" id="left-scroll">
+                    <button type="button" class="btn-floating red btn-large tm-scroll" id="left-scroll" value="left">
                         <i class="large material-icons">chevron_left</i>
                     </a>
                 </div>
@@ -126,10 +138,10 @@
                     </div>
 
                 </div>
-                <div class="col s1 tm-scroll-btn hide-on-med-and-down" id="left-scroll-col">
-                    <a class="btn-floating red btn-large" id="left-scroll">
+                <div class="col s1 tm-scroll-btn hide-on-med-and-down" id="right-scroll-col">
+                    <button type="button" class="btn-floating red btn-large tm-scroll" id="right-scroll" value="right">
                         <i class="large material-icons">chevron_right</i>
-                    </a>
+                    </button>
                 </div>
 
             </div>
@@ -181,12 +193,14 @@
     <!-- Firebase Realtime DB  -->
     <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
 
-    <!-- JavaScript File -->
-    <script src="./assets/javascript/logic.js"></script>
+    <!-- Firebase Authentication -->
+    <script src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script>
 
     <!-- Google Maps API  -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7qKO6Pu0BX0_Hh7xtqJrFBqCR1hxegDo&callback=initMap" async
-        defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7qKO6Pu0BX0_Hh7xtqJrFBqCR1hxegDo&callback=initMap" async defer></script>
+
+    <!-- JavaScript File -->
+    <script src="./assets/javascript/logic.js"></script>
 
 
 </body>

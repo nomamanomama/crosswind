@@ -7,11 +7,43 @@ var config = {
     authDomain: "xplor-f51f6.firebaseapp.com",
     databaseURL: "https://xplor-f51f6.firebaseio.com",
     projectId: "xplor-f51f6",
-    storageBucket: "",
+    storageBucket: "xplor-f51f6.appspot.com",
     messagingSenderId: "337857743907"
 };
 firebase.initializeApp(config);
+
+// create a variable for the Firebase database
 var db = firebase.database();
+// Initialize the FirebaseUI Widget using Firebase.
+var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+//Login configuration options
+var uiConfig = {
+    callbacks: {
+        signInSuccess: function (currentUser, credential, redirectUrl) {
+            // User successfully signed in.
+            // Return type determines whether we continue the redirect automatically
+            // or whether we leave that to developer to handle.
+            return true;
+        },
+        uiShown: function () {
+            // The widget is rendered.
+            // Hide the loader.
+            document.getElementById('loader').style.display = 'none';
+        }
+    },
+    // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+    signInFlow: 'popup',
+    signInSuccessUrl: 'http://127.0.0.1:5500/index.html',
+    signInOptions: [
+        // providers available for signin
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        // firebase.auth.EmailAuthProvider.PROVIDER_ID
+    ]
+};
+
+// The start method will wait until the DOM is loaded.
+ui.start('#firebaseui-auth-container', uiConfig);
 
 $(function () {
     console.log("hello world");
@@ -19,31 +51,37 @@ $(function () {
     // Global Variables
     var InputType = 1;
     // Ticket Master Search Word Keys  
-    var cityCode = "Houston";
-    var stateCode = "TX";
+    var cityCode = "New York";
+    var stateCode = "NY";
     var zipCode;
     var size = 8;
     var countryCode = "US"; //Can be removed if desired
     var ticketmaster_queryURL;
+    var tmIsScrolling = false;
 
     // ---------------------
-   
+    //open modals with trigger
+    $('.modal').modal();
+
     //get the community pinned map markers from database
     populateCommunityMarkers();
 
     // this makes the side bar open in mobile view
     $(".button-collapse").sideNav();
 
-    // tm scroll buttons, NOT CURRENTLY WORKING
-    $("#left-scroll").on("click", function () {
-        console.log("Left scroll was clicked!");
-        var e = jQuery.Event("keyup");
-        $("#tm-feed").focus();
-        e.keyCode = 37;
-        $("#tm-feed").trigger(e);
+    //bind left-scroll button to animation
+    $("#left-scroll").bind("mousedown", function () {
+        $("#tm-feed").animate({ scrollLeft: $("#tm-feed").scrollLeft() - 300 }, 500);
+        return false;
     });
 
+    //bind right-scroll button to animation
+    $("#right-scroll").bind("mousedown", function () {
+        $("#tm-feed").animate({ scrollLeft: $("#tm-feed").scrollLeft() + 300 }, 500);
+        return false;
+    });
 
+    
     //this initializes the wiki carousel
     $('.carousel.carousel-slider').carousel({fullWidth: true});
     // ---------------------
@@ -227,7 +265,7 @@ $(function () {
             InputType = 2;
 
         }
-        findGeo(location);
+        findGeo(cityCode + "," + stateCode);
         findTickets();
         getWiki();
     });
@@ -277,12 +315,14 @@ function findGeo(address) {
         dataType: "json",
         success: function (response) {
             console.log(response.results);
-            gm_geoLat = response.results[0].geometry.location.lat;
-            gm_geoLng = response.results[0].geometry.location.lng;
+            //check length of response results
+            if (response.results.length !== 0){
+                gm_geoLat = response.results[0].geometry.location.lat;
+                gm_geoLng = response.results[0].geometry.location.lng;
 
-            console.log("Location: " + gm_geoLat, ", " + gm_geoLng);
-            updatePosition();
-
+                console.log("Location: " + gm_geoLat, ", " + gm_geoLng);
+                updatePosition();
+            }
         },
         error: function (xhr, status, err) {
             // This time, we do not end up here!
