@@ -128,7 +128,7 @@ $(function () {
         // $.getJSON('https://en.wikipedia.org/w/api.php?format=' + format + '&action=' + action + '&generator=' + generator + '&gsrnamespace=' + gsrnamespace + '&gsrlimit=' + sizeWiki + '&prop=' + prop + '&pilimit=' + pilimit + '&exintro&explaintext&exsentences=' + exsentences + '&exlimit=' + exlimit + '&gsrsearch=' + cityCode + "+" + stateCode + '&callback=?', function (data) {
 
         // Wikipedia Search Word Keys
-        var sizeWiki = 1;
+        var sizeWiki = 3;
         var format = "json";
         var action = "query";
         var generator = "search";
@@ -139,24 +139,28 @@ $(function () {
         var exlimit = "max";
         var list = "search";
 
-        $.getJSON('https://en.wikipedia.org/w/api.php?format=' + format + '&action=' + action + '&list=' + list + '&srprop=' + prop + '&srlimit=' + sizeWiki + '&srsearch=' + cityCode + "+" + stateCode + '&callback=?', function (data) {
 
+        $.getJSON('https://en.wikipedia.org/w/api.php?format=' + format + '&action=' + action + '&list=' + list + '&srprop=' + prop + '&srlimit=' + sizeWiki + '&srsearch=' + cityCode + "+" + stateCode + '&callback=?', function (data) {
             console.log(data);
             $("#wp-feed").empty();
             // Loop to all cards pull form API
             for (var i = 0; i < sizeWiki; i++) {
+                var num = numberToWords.toWords(i+1);
+                console.log(num);
+                
                 var wikiPageTitle = data.query.search[i].title;
                 console.log(wikiPageTitle);
 
                 var wpDiv1 = $("<div>");
-                wpDiv1.addClass("card z-depth-2 ");
+                wpDiv1.addClass("carousel-item ");
+                wpDiv1.attr("href", "#"+num+"!");
                 var wpDiv2 = $("<div>");
-                wpDiv2.addClass("card-content");
+                wpDiv2.addClass("card-content wp-card");
                 var wpSpanTitle = $("<span>");
-                wpSpanTitle.addClass("card-title activator grey-text text-darken-4");
+                wpSpanTitle.addClass("card-title activator grey-text text-darken-4 wp-title");
                 wpSpanTitle.text(wikiPageTitle);
                 var wpDivInfo = $("<div>");
-                wpDivInfo.addClass("card-content");
+                wpDivInfo.addClass("card-content wp-content");
                 var wpPInfo = $("<p>");
                 wpPInfo.text('Need to add real data ....Topping cookie brownie. Cheesecake oat cake chocolate cake. Cookie oat cake oat cake tootsie roll. Chocolate cake marshmallow chocolate cookie. Icing jelly-o apple pie cotton candy. Chocolate bear claw bonbon jujubes icing liquorice jelly-o muffin. Topping caramels donut lollipop. Powder cotton candy candy tootsie roll ice cream chocolate chupa chups. Chocolate cake dessert marzipan. Powder tootsie roll pastry. Cotton candy caramels croissant chocolate cake wafer chupa chups marshmallow. Jujubes bear claw sweet jelly tart gummi bears topping tart gummies. Icing liquorice pudding bear claw cheesecake jelly brownie. Wafer pastry marshmallow. Bear claw marzipan fruitcake cupcake candy marzipan. Gummies candy canes pudding sweet jujubes gingerbread fruitcake lemon drops powder. Croissant muffin lemon drops lemon drops toffee tootsie roll. Marshmallow lollipop gummies cake. Cookie cake marzipan candy cupcake chocolate ice cream. Brownie wafer bonbon. Marzipan pudding lemon drops candy canes carrot cake carrot cake cheesecake bonbon. Chupa chups apple pie caramels chocolate bar biscuit muffin toffee. Pastry jelly beans liquorice. Cake jelly beans croissant macaroon muffin gingerbread cake sesame snaps fruitcake. Candy canes apple pie tootsie roll powder cupcake. Chupa chups candy canes marzipan cake carrot cake. Dessert pudding chocolate cake.')
                 var wpDiv3 = $("<div>");
