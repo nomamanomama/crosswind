@@ -123,36 +123,44 @@ $(function () {
     function getWiki() {
         // $.getJSON('https://en.wikipedia.org/w/api.php?action=query&format=json&gsrlimit=' + sizeWiki + '&generator=search&origin=*&gsrsearch=' + cityCode + "+" + stateCode, function (data) {
 
-
         // $.getJSON('https://en.wikipedia.org/w/api.php?format=' + format + '&action=' + action + '&generator=' + generator + '&gsrnamespace=' + gsrnamespace + '&gsrlimit=' + sizeWiki + '&prop=' + prop + '&pilimit=' + pilimit + '&exintro&explaintext&exsentences=' + exsentences + '&exlimit=' + exlimit + '&gsrsearch=' + cityCode + "+" + stateCode + '&callback=?', function (data) {
 
         // Wikipedia Search Word Keys
+        // https://www.mediawiki.org/wiki/API:Search
         var sizeWiki = 6;
         var format = "json";
         var action = "query";
         var generator = "search";
         var gsrnamespace = "0";
-        var prop = "titlesnippet|snippet";
+        var prop = "titlesnippet|snippet|sectionsnippet";
         var pilimit = "max";
         var exsentences = "1";
         var exlimit = "max";
         var list = "search";
-
+        console.log(cityCode, stateCode);
 
         $.getJSON('https://en.wikipedia.org/w/api.php?format=' + format + '&action=' + action + '&list=' + list + '&srprop=' + prop + '&srlimit=' + sizeWiki + '&srsearch=' + cityCode + "+" + stateCode + '&callback=?', function (data) {
             console.log(data);
             $(".carousel").empty();
-            // Loop to all cards pull form API
+            // Loop to add all cards data pulled frosm API
             for (var i = 0; i < sizeWiki; i++) {
-                var num = numberToWords.toWords(i + 1);
-                console.log(num);
+                var n = i+1;
+                var num = numberToWords.toWords(n);
+                // console.log(num);
 
                 var wikiPageTitle = data.query.search[i].title;
-                console.log(wikiPageTitle);
+                var wikiPageSnippet = data.query.search[i].snippet;
+                // console.log(wikiPageTitle);
+                // console.log(wikiPageSnippet);
+                
 
                 var wpDiv1 = $("<div>");
                 wpDiv1.addClass("carousel-item");
                 wpDiv1.attr("href", "#" + num + "!");
+                // ===
+                // wpDiv1.addClass("carousel-item active");
+                // wpDiv1.attr("style",'z-index: -'+n+'; opacity: 1; display: block; transform: translateX(0px) translateX(0px) translateX(0px) translateZ(0px));
+                // ===
                 var wpDiv2 = $("<div>");
                 wpDiv2.addClass("card-content wp-card");
                 var wpSpanTitle = $("<span>");
@@ -161,13 +169,13 @@ $(function () {
                 var wpDivInfo = $("<div>");
                 wpDivInfo.addClass("card-content wp-content");
                 var wpPInfo = $("<p>");
-                wpPInfo.text('Need to add real data ....Topping cookie brownie. Cheesecake oat cake chocolate cake. Cookie oat cake oat cake tootsie roll. Chocolate cake marshmallow chocolate cookie. Icing jelly-o apple pie cotton candy. Chocolate bear claw bonbon jujubes icing liquorice jelly-o muffin. Topping caramels donut lollipop. Powder cotton candy candy tootsie roll ice cream chocolate chupa chups. Chocolate cake dessert marzipan. Powder tootsie roll pastry. Cotton candy caramels croissant chocolate cake wafer chupa chups marshmallow. Jujubes bear claw sweet jelly tart gummi bears topping tart gummies. Icing liquorice pudding bear claw cheesecake jelly brownie. Wafer pastry marshmallow. Bear claw marzipan fruitcake cupcake candy marzipan. Gummies candy canes pudding sweet jujubes gingerbread fruitcake lemon drops powder. Croissant muffin lemon drops lemon drops toffee tootsie roll. Marshmallow lollipop gummies cake. Cookie cake marzipan candy cupcake chocolate ice cream. Brownie wafer bonbon. Marzipan pudding lemon drops candy canes carrot cake carrot cake cheesecake bonbon. Chupa chups apple pie caramels chocolate bar biscuit muffin toffee. Pastry jelly beans liquorice. Cake jelly beans croissant macaroon muffin gingerbread cake sesame snaps fruitcake. Candy canes apple pie tootsie roll powder cupcake. Chupa chups candy canes marzipan cake carrot cake. Dessert pudding chocolate cake.');
+                wpPInfo.text('Need to add real data ....');
+                // wpPInfo.html(wikiPageSnippet);
                 // var wpDiv3 = $("<div>");
                 // wpDiv3.addClass("card-action");
                 // var wpA1 = $("<a>");
                 // wpA1.attr("href", "#");
                 // wpA1.text("READ MORE");
-
 
                 // wpDiv3.append(wpA1);
                 wpDivInfo.append(wpPInfo);
@@ -175,7 +183,6 @@ $(function () {
                 wpDiv2.append(wpSpanTitle, wpDivInfo);
                 wpDiv1.append(wpDiv2);
                 $(".carousel").append(wpDiv1);
-
             }
             //this initializes the wiki carousel
             $('.carousel.carousel-slider').carousel({ fullWidth: true });
