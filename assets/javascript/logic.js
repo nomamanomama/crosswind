@@ -25,8 +25,7 @@ $(function () {
         $("#tm-feed").trigger(e);
     });
 
-    //this initializes the wiki carousel
-    $('.carousel.carousel-slider').carousel({fullWidth: true});
+
     // ---------------------
     // ticket master API AJAX call function
     // Chrome and Opera browswers show error codes that M70 and Opera 57  (started March 15, 2018); the call is still functional
@@ -128,7 +127,7 @@ $(function () {
         // $.getJSON('https://en.wikipedia.org/w/api.php?format=' + format + '&action=' + action + '&generator=' + generator + '&gsrnamespace=' + gsrnamespace + '&gsrlimit=' + sizeWiki + '&prop=' + prop + '&pilimit=' + pilimit + '&exintro&explaintext&exsentences=' + exsentences + '&exlimit=' + exlimit + '&gsrsearch=' + cityCode + "+" + stateCode + '&callback=?', function (data) {
 
         // Wikipedia Search Word Keys
-        var sizeWiki = 3;
+        var sizeWiki = 6;
         var format = "json";
         var action = "query";
         var generator = "search";
@@ -145,15 +144,15 @@ $(function () {
             $(".carousel").empty();
             // Loop to all cards pull form API
             for (var i = 0; i < sizeWiki; i++) {
-                var num = numberToWords.toWords(i+1);
+                var num = numberToWords.toWords(i + 1);
                 console.log(num);
-                
+
                 var wikiPageTitle = data.query.search[i].title;
                 console.log(wikiPageTitle);
 
                 var wpDiv1 = $("<div>");
-                wpDiv1.addClass("carousel-item ");
-                wpDiv1.attr("href", "#"+num+"!");
+                wpDiv1.addClass("carousel-item");
+                wpDiv1.attr("href", "#" + num + "!");
                 var wpDiv2 = $("<div>");
                 wpDiv2.addClass("card-content wp-card");
                 var wpSpanTitle = $("<span>");
@@ -169,7 +168,7 @@ $(function () {
                 // wpA1.attr("href", "#");
                 // wpA1.text("READ MORE");
 
-                
+
                 // wpDiv3.append(wpA1);
                 wpDivInfo.append(wpPInfo);
                 wpDiv2.append(wpSpanTitle);
@@ -178,7 +177,8 @@ $(function () {
                 $(".carousel").append(wpDiv1);
 
             }
-
+            //this initializes the wiki carousel
+            $('.carousel.carousel-slider').carousel({ fullWidth: true });
         });
     }
 
