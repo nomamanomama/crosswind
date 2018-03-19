@@ -1,5 +1,19 @@
  // xplor
 
+
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyDjc4tJqAYyrcIUGQUrKHEuRnHBEMbEZEI",
+    authDomain: "xplor-f51f6.firebaseapp.com",
+    databaseURL: "https://xplor-f51f6.firebaseio.com",
+    projectId: "xplor-f51f6",
+    storageBucket: "",
+    messagingSenderId: "337857743907"
+};
+firebase.initializeApp(config);
+var db = firebase.database();
+
+
  $(function () {
     console.log("hello world");
     // ---------------------
@@ -13,8 +27,9 @@
     var countryCode = "US"; //Can be removed if desired
     var ticketmaster_queryURL;
     // ---------------------
-
-
+   
+    //get the community pinned map markers from database
+    populateCommunityMarkers();
 
     // ---------------------
     // ticket master API AJAX call function
@@ -75,7 +90,15 @@
     // ---------------------
 
 
+    $("#addMarker").on("click", function () {
+        console.log ("add a marker");
+        
+        var lat = gm_marker.getPosition().lat();
+        var lng = gm_marker.getPosition().lng();
+        //update db storage with new marker position
+        addCommunityMarker(lat,lng);
 
+    });
 
 
 
@@ -95,6 +118,8 @@ var gm_geoLat = 40.7127753;
 var gm_geoLng = -74.0059728;
 var gm_searchLocation;
 var gm_marker;
+var gm_markers = [];
+
 
 function findGeo(address) {
 
@@ -133,9 +158,57 @@ function initMap() {
     });
 }
 
+//update the map location to new search location
 function updatePosition() {
     gm_searchLocation = new google.maps.LatLng(gm_geoLat, gm_geoLng);
+    //set a marker at the current position
     gm_marker.setPosition(gm_searchLocation);
     gm_map.setCenter(gm_searchLocation);
 }
 
+//store gm_markers as string in database key community
+function addCommunityMarker(lat, lng) {
+    
+    var latLng = lat + "," + lng;
+    //update global variable if position is not in the list
+   if(gm_markers.indexOf(latLng) === -1)
+        gm_markers.push(latLng);
+
+    db.ref().once("value", function (snapshot) {
+        var markers = [];
+        if (snapshot.val()) {
+            if(snapshot.val().community){
+                markers = JSON.parse(snapshot.val().community);
+            }
+            //check if position is already in community board
+            if (markers.indexOf(latLng) === -1){
+                //it was not in the list so push to the local array
+                markers.push(latLng);
+                //update the database key with a stringified array
+                db.ref().update({'community': JSON.stringify(markers) });
+            }
+        }    
+    });
+}
+
+//get existing favorites from database community key
+function populateCommunityMarkers() {
+
+    //on initial load with gm_markers array empty, fill the array with community saved pins
+    if(gm_markers.length === 0){
+        //get a snapshot of the database 
+        db.ref().once("value", function(snapshot) {
+            if(snapshot.val().community){
+                gm_markers = JSON.parse(snapshot.val().community);    
+                //create google markers to display in community map
+                gm_markers.forEach(element => {
+                    var latLng = element.split(",");
+                    var marker = new google.maps.Marker({
+                        position: (parseInt(latLng[0]), parseInt(latLng[1])),
+                        map: gm_map
+                    });
+                });
+            }
+        });
+    }
+}
