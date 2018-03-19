@@ -142,7 +142,7 @@ $(function () {
 
         $.getJSON('https://en.wikipedia.org/w/api.php?format=' + format + '&action=' + action + '&list=' + list + '&srprop=' + prop + '&srlimit=' + sizeWiki + '&srsearch=' + cityCode + "+" + stateCode + '&callback=?', function (data) {
             console.log(data);
-            $("#wp-feed").empty();
+            $(".carousel").empty();
             // Loop to all cards pull form API
             for (var i = 0; i < sizeWiki; i++) {
                 var num = numberToWords.toWords(i+1);
@@ -162,20 +162,20 @@ $(function () {
                 var wpDivInfo = $("<div>");
                 wpDivInfo.addClass("card-content wp-content");
                 var wpPInfo = $("<p>");
-                wpPInfo.text('Need to add real data ....Topping cookie brownie. Cheesecake oat cake chocolate cake. Cookie oat cake oat cake tootsie roll. Chocolate cake marshmallow chocolate cookie. Icing jelly-o apple pie cotton candy. Chocolate bear claw bonbon jujubes icing liquorice jelly-o muffin. Topping caramels donut lollipop. Powder cotton candy candy tootsie roll ice cream chocolate chupa chups. Chocolate cake dessert marzipan. Powder tootsie roll pastry. Cotton candy caramels croissant chocolate cake wafer chupa chups marshmallow. Jujubes bear claw sweet jelly tart gummi bears topping tart gummies. Icing liquorice pudding bear claw cheesecake jelly brownie. Wafer pastry marshmallow. Bear claw marzipan fruitcake cupcake candy marzipan. Gummies candy canes pudding sweet jujubes gingerbread fruitcake lemon drops powder. Croissant muffin lemon drops lemon drops toffee tootsie roll. Marshmallow lollipop gummies cake. Cookie cake marzipan candy cupcake chocolate ice cream. Brownie wafer bonbon. Marzipan pudding lemon drops candy canes carrot cake carrot cake cheesecake bonbon. Chupa chups apple pie caramels chocolate bar biscuit muffin toffee. Pastry jelly beans liquorice. Cake jelly beans croissant macaroon muffin gingerbread cake sesame snaps fruitcake. Candy canes apple pie tootsie roll powder cupcake. Chupa chups candy canes marzipan cake carrot cake. Dessert pudding chocolate cake.')
-                var wpDiv3 = $("<div>");
-                wpDiv3.addClass("card-action");
-                var wpA1 = $("<a>");
-                wpA1.attr("href", "#");
-                wpA1.text("READ MORE");
+                wpPInfo.text('Need to add real data ....Topping cookie brownie. Cheesecake oat cake chocolate cake. Cookie oat cake oat cake tootsie roll. Chocolate cake marshmallow chocolate cookie. Icing jelly-o apple pie cotton candy. Chocolate bear claw bonbon jujubes icing liquorice jelly-o muffin. Topping caramels donut lollipop. Powder cotton candy candy tootsie roll ice cream chocolate chupa chups. Chocolate cake dessert marzipan. Powder tootsie roll pastry. Cotton candy caramels croissant chocolate cake wafer chupa chups marshmallow. Jujubes bear claw sweet jelly tart gummi bears topping tart gummies. Icing liquorice pudding bear claw cheesecake jelly brownie. Wafer pastry marshmallow. Bear claw marzipan fruitcake cupcake candy marzipan. Gummies candy canes pudding sweet jujubes gingerbread fruitcake lemon drops powder. Croissant muffin lemon drops lemon drops toffee tootsie roll. Marshmallow lollipop gummies cake. Cookie cake marzipan candy cupcake chocolate ice cream. Brownie wafer bonbon. Marzipan pudding lemon drops candy canes carrot cake carrot cake cheesecake bonbon. Chupa chups apple pie caramels chocolate bar biscuit muffin toffee. Pastry jelly beans liquorice. Cake jelly beans croissant macaroon muffin gingerbread cake sesame snaps fruitcake. Candy canes apple pie tootsie roll powder cupcake. Chupa chups candy canes marzipan cake carrot cake. Dessert pudding chocolate cake.');
+                // var wpDiv3 = $("<div>");
+                // wpDiv3.addClass("card-action");
+                // var wpA1 = $("<a>");
+                // wpA1.attr("href", "#");
+                // wpA1.text("READ MORE");
 
                 
-                wpDiv3.append(wpA1);
+                // wpDiv3.append(wpA1);
                 wpDivInfo.append(wpPInfo);
                 wpDiv2.append(wpSpanTitle);
-                wpDiv2.append(wpSpanTitle, wpDivInfo, wpDiv3);
+                wpDiv2.append(wpSpanTitle, wpDivInfo);
                 wpDiv1.append(wpDiv2);
-                $("#wp-feed").append(wpDiv1);
+                $(".carousel").append(wpDiv1);
 
             }
 
