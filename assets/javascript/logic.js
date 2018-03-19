@@ -203,8 +203,9 @@ function populateCommunityMarkers() {
                 //create google markers to display in community map
                 gm_markers.forEach(element => {
                     var latLng = element.split(",");
+                    var pos = new google.maps.LatLng(parseFloat(latLng[0]), parseFloat(latLng[1]));
                     var marker = new google.maps.Marker({
-                        position: (parseInt(latLng[0]), parseInt(latLng[1])),
+                        position: (pos),
                         map: gm_map
                     });
                 });
