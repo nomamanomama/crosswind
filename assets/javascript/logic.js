@@ -51,12 +51,13 @@ $(function () {
     // Global Variables
     var InputType = 1;
     // Ticket Master Search Word Keys  
-    var cityCode = "Houston";
-    var stateCode = "TX";
+    var cityCode = "New York";
+    var stateCode = "NY";
     var zipCode;
     var size = 8;
     var countryCode = "US"; //Can be removed if desired
     var ticketmaster_queryURL;
+    var tmIsScrolling = false;
 
     // ---------------------
     //open modals with trigger
@@ -68,16 +69,19 @@ $(function () {
     // this makes the side bar open in mobile view
     $(".button-collapse").sideNav();
 
-    // tm scroll buttons, NOT CURRENTLY WORKING
-    $("#left-scroll").on("click", function () {
-        console.log("Left scroll was clicked!");
-        var e = jQuery.Event("keyup");
-        $("#tm-feed").focus();
-        e.keyCode = 37;
-        $("#tm-feed").trigger(e);
+    //bind left-scroll button to animation
+    $("#left-scroll").bind("mousedown", function () {
+        $("#tm-feed").animate({ scrollLeft: $("#tm-feed").scrollLeft() - 300 }, 500);
+        return false;
     });
 
+    //bind right-scroll button to animation
+    $("#right-scroll").bind("mousedown", function () {
+        $("#tm-feed").animate({ scrollLeft: $("#tm-feed").scrollLeft() + 300 }, 500);
+        return false;
+    });
 
+    
     //this initializes the wiki carousel
     $('.carousel.carousel-slider').carousel({fullWidth: true});
     // ---------------------
@@ -261,7 +265,7 @@ $(function () {
             InputType = 2;
 
         }
-        findGeo(location);
+        findGeo(cityCode + "," + stateCode);
         findTickets();
         getWiki();
     });
@@ -311,12 +315,14 @@ function findGeo(address) {
         dataType: "json",
         success: function (response) {
             console.log(response.results);
-            gm_geoLat = response.results[0].geometry.location.lat;
-            gm_geoLng = response.results[0].geometry.location.lng;
+            //check length of response results
+            if (response.results.length !== 0){
+                gm_geoLat = response.results[0].geometry.location.lat;
+                gm_geoLng = response.results[0].geometry.location.lng;
 
-            console.log("Location: " + gm_geoLat, ", " + gm_geoLng);
-            updatePosition();
-
+                console.log("Location: " + gm_geoLat, ", " + gm_geoLng);
+                updatePosition();
+            }
         },
         error: function (xhr, status, err) {
             // This time, we do not end up here!
