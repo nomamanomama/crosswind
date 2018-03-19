@@ -1,29 +1,90 @@
 // xplor
 
+
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyDjc4tJqAYyrcIUGQUrKHEuRnHBEMbEZEI",
+    authDomain: "xplor-f51f6.firebaseapp.com",
+    databaseURL: "https://xplor-f51f6.firebaseio.com",
+    projectId: "xplor-f51f6",
+    storageBucket: "xplor-f51f6.appspot.com",
+    messagingSenderId: "337857743907"
+};
+firebase.initializeApp(config);
+
+// create a variable for the Firebase database
+var db = firebase.database();
+// Initialize the FirebaseUI Widget using Firebase.
+var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+//Login configuration options
+var uiConfig = {
+    callbacks: {
+        signInSuccess: function (currentUser, credential, redirectUrl) {
+            // User successfully signed in.
+            // Return type determines whether we continue the redirect automatically
+            // or whether we leave that to developer to handle.
+            return true;
+        },
+        uiShown: function () {
+            // The widget is rendered.
+            // Hide the loader.
+            document.getElementById('loader').style.display = 'none';
+        }
+    },
+    // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+    signInFlow: 'popup',
+    signInSuccessUrl: 'http://127.0.0.1:5500/index.html',
+    signInOptions: [
+        // providers available for signin
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        // firebase.auth.EmailAuthProvider.PROVIDER_ID
+    ]
+};
+
+// The start method will wait until the DOM is loaded.
+ui.start('#firebaseui-auth-container', uiConfig);
+
 $(function () {
     console.log("hello world");
     // ---------------------
     // Global Variables
     var InputType = 1;
     // Ticket Master Search Word Keys  
-    var cityCode = "Houston";
-    var stateCode = "TX";
+    var cityCode = "New York";
+    var stateCode = "NY";
     var zipCode;
     var size = 8;
     var countryCode = "US"; //Can be removed if desired
     var ticketmaster_queryURL;
+    var tmIsScrolling = false;
+
+    // ---------------------
+    //open modals with trigger
+    $('.modal').modal();
+
+    //get the community pinned map markers from database
+    populateCommunityMarkers();
 
     // this makes the side bar open in mobile view
     $(".button-collapse").sideNav();
 
-    // tm scroll buttons, NOT CURRENTLY WORKING
-    $("#left-scroll").on("click", function () {
-        console.log("Left scroll was clicked!");
-        var e = jQuery.Event("keyup");
-        $("#tm-feed").focus();
-        e.keyCode = 37;
-        $("#tm-feed").trigger(e);
+    //bind left-scroll button to animation
+    $("#left-scroll").bind("mousedown", function () {
+        $("#tm-feed").animate({ scrollLeft: $("#tm-feed").scrollLeft() - 300 }, 500);
+        return false;
     });
+
+    //bind right-scroll button to animation
+    $("#right-scroll").bind("mousedown", function () {
+        $("#tm-feed").animate({ scrollLeft: $("#tm-feed").scrollLeft() + 300 }, 500);
+        return false;
+    });
+
+
+
+
+    
 
 
     // ---------------------
@@ -219,14 +280,22 @@ $(function () {
             InputType = 2;
 
         }
-        findGeo(location);
+        findGeo(cityCode + "," + stateCode);
         findTickets();
         getWiki();
     });
     // ---------------------
 
 
+    $("#addMarker").on("click", function () {
+        console.log ("add a marker");
+        
+        var lat = gm_marker.getPosition().lat();
+        var lng = gm_marker.getPosition().lng();
+        //update db storage with new marker position
+        addCommunityMarker(lat,lng);
 
+    });
 
 
 
@@ -247,6 +316,8 @@ var gm_geoLat = 40.7127753;
 var gm_geoLng = -74.0059728;
 var gm_searchLocation;
 var gm_marker;
+var gm_markers = [];
+
 
 function findGeo(address) {
 
@@ -259,12 +330,14 @@ function findGeo(address) {
         dataType: "json",
         success: function (response) {
             console.log(response.results);
-            gm_geoLat = response.results[0].geometry.location.lat;
-            gm_geoLng = response.results[0].geometry.location.lng;
+            //check length of response results
+            if (response.results.length !== 0){
+                gm_geoLat = response.results[0].geometry.location.lat;
+                gm_geoLng = response.results[0].geometry.location.lng;
 
-            console.log("Location: " + gm_geoLat, ", " + gm_geoLng);
-            updatePosition();
-
+                console.log("Location: " + gm_geoLat, ", " + gm_geoLng);
+                updatePosition();
+            }
         },
         error: function (xhr, status, err) {
             // This time, we do not end up here!
@@ -285,9 +358,58 @@ function initMap() {
     });
 }
 
+//update the map location to new search location
 function updatePosition() {
     gm_searchLocation = new google.maps.LatLng(gm_geoLat, gm_geoLng);
+    //set a marker at the current position
     gm_marker.setPosition(gm_searchLocation);
     gm_map.setCenter(gm_searchLocation);
 }
 
+//store gm_markers as string in database key community
+function addCommunityMarker(lat, lng) {
+    
+    var latLng = lat + "," + lng;
+    //update global variable if position is not in the list
+   if(gm_markers.indexOf(latLng) === -1)
+        gm_markers.push(latLng);
+
+    db.ref().once("value", function (snapshot) {
+        var markers = [];
+        if (snapshot.val()) {
+            if(snapshot.val().community){
+                markers = JSON.parse(snapshot.val().community);
+            }
+            //check if position is already in community board
+            if (markers.indexOf(latLng) === -1){
+                //it was not in the list so push to the local array
+                markers.push(latLng);
+                //update the database key with a stringified array
+                db.ref().update({'community': JSON.stringify(markers) });
+            }
+        }    
+    });
+}
+
+//get existing favorites from database community key
+function populateCommunityMarkers() {
+
+    //on initial load with gm_markers array empty, fill the array with community saved pins
+    if(gm_markers.length === 0){
+        //get a snapshot of the database 
+        db.ref().once("value", function(snapshot) {
+            if(snapshot.val().community){
+                gm_markers = JSON.parse(snapshot.val().community);    
+                //create google markers to display in community map
+                gm_markers.forEach(element => {
+                    var latLng = element.split(",");
+                    var pos = new google.maps.LatLng(parseFloat(latLng[0]), parseFloat(latLng[1]));
+                    var marker = new google.maps.Marker({
+                        position: (pos),
+                        map: gm_map
+                    });
+                });
+            }
+        });
+    }
+}
