@@ -75,7 +75,8 @@
                         <!-- <input 
                             id="gm-input" 
                             type="tel"  -->
-                        <input class="validate" id="gm-input-location" type="text" title="City Name, 2-Digit State or Country Codes  or 5-Digit Zip Code" pattern="(([0-9]{5})|([\w ]+, \w{2}))">
+                        <input class="validate" id="gm-input-location" type="text" title="City Name, 2-Digit State or Country Codes  or 5-Digit Zip Code"
+                            pattern="(([0-9]{5})|([\w ]+, \w{2}))">
                         <label for="gm-input-location">City, State/Country or US Postal Code</label>
                     </div>
                 </div>
@@ -147,36 +148,34 @@
         </div>
     </div>
 
-    <!-- WIKIPEDIA ROW BEGINS HERE -->
-    <div class="row" id="wp-row">
-        <div class="container">
-            <div class="col s12">
-                <div class="card z-depth-2 ">
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <!-- WIKIPEDIA TINY FACTS ROW BEGINS HERE -->
     <div class="row" id="wp-2-row">
         <div class="container">
             <div class="col s12">
+                <div id="wpSmallCards-feed"></div>
+<!-- 
                 <div class="card-panel tiny-facts">
                     <h3 class="wp-2-card-title">Title</h3>
                     <span class="white-text wp-2-card-text">I am a very simple card. I am good at containing small bits of information. I am convenient because I
                         require little markup to use effectively. I am similar to what is called a panel in other frameworks.
                     </span>
                     <div class="card-action center-align">
-                    <a class="btn btn-small center-align waves-effect wp-2-btn">READ MORE</a></div>
+                        <a class="btn btn-small center-align waves-effect wp-2-btn">READ MORE</a>
+                    </div>
                 </div>
                 <div class="carousel wiki">
                     <a class="carousel-item" href="#one!">
-                        <div class="card-panel teal">
-                            <span class="white-text">I am a very simple card. I am good at containing small bits of information. I am convenient because
-                                I require little markup to use effectively. I am similar to what is called a panel in other
-                                frameworks.
-                            </span>
-                        </div>
+                        <div class="card-panel tiny-facts">
+                            <h3 class="wp-2-card-title">Title</h3>
+                            <div class="card-panel teal">
+                                <span class="white-text">I am a very simple card. I am good at containing small bits of information. I am convenient
+                                    because I require little markup to use effectively. I am similar to what is called a
+                                    panel in other frameworks.
+                                </span>
+                            </div>
+                            </div>
                     </a>
                     <a class="carousel-item" href="#two!">
                         <div class="card-panel teal">
@@ -210,33 +209,40 @@
                             </span>
                         </div>
                     </a>
+                    </div>
+                </div> -->
+
+            </div>
+        </div>
+        <!-- WIKIPEDIA ROW BEGINS HERE -->
+        <div class="row" id="wp-row">
+            <div class="container">
+                <div class="col s12">
+                    <div id="wp-feed"></div>
                 </div>
             </div>
-
         </div>
-    </div>
+        <!-- Number to Words -->
+        <script type="text/javascript" src="./assets/javascript/numberToWords.min.js"></script>
 
-    <!-- Number to Words -->
-    <script type="text/javascript" src="./assets/javascript/numberToWords.min.js"></script>
+        <!-- JQuery -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <!-- JQuery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!-- JavaScript for Materialize -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
-    <!-- JavaScript for Materialize -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+        <!-- Firebase Realtime DB  -->
+        <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
 
-    <!-- Firebase Realtime DB  -->
-    <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+        <!-- Firebase Authentication -->
+        <script src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script>
 
-    <!-- Firebase Authentication -->
-    <script src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script>
+        <!-- Google Maps API  -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7qKO6Pu0BX0_Hh7xtqJrFBqCR1hxegDo&callback=initMap" async
+            defer></script>
 
-    <!-- Google Maps API  -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7qKO6Pu0BX0_Hh7xtqJrFBqCR1hxegDo&callback=initMap" async
-        defer></script>
-
-    <!-- JavaScript File -->
-    <script src="./assets/javascript/logic.js"></script>
+        <!-- JavaScript File -->
+        <script src="./assets/javascript/logic.js"></script>
 
 
 </body>

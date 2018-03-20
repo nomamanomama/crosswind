@@ -1,12 +1,13 @@
 // xplor
-
-
-$(document).ready(function(){
+$(document).ready(function () {
     $('.carousel').carousel();
-    $('.carousel wiki').carousel();
-  });
-      
+
+});
+// Global Variables
 var wikiPageTitle1;
+var wikiTitleParsed;
+var wikiUrl;
+
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyDjc4tJqAYyrcIUGQUrKHEuRnHBEMbEZEI",
@@ -52,7 +53,7 @@ var uiConfig = {
 ui.start('#firebaseui-auth-container', uiConfig);
 
 $(function () {
-    console.log("hello world");
+
     // ---------------------
     // Global Variables
     var InputType = 1;
@@ -161,11 +162,13 @@ $(function () {
                     var tmA1Info = $("<a>");
                     tmA1Info.addClass("btn waves-effect waves-teal align-center tm-ticket-btn");
                     tmA1Info.attr("href", eventLink);
+                    tmA1Info.attr("target", "_blank");
                     tmA1Info.text("FIND TICKETS");
 
                     var tmA2Info = $("<a>");
                     tmA2Info.addClass("btn waves-effect waves-teal align-center tm-ticket-btn");
                     tmA2Info.attr("href", eventLink);
+                    tmA2Info.attr("target", "_blank");
                     tmA2Info.text("TELL FRIENDS");
 
                     tmDivImg.append(tmImg);
@@ -206,9 +209,10 @@ $(function () {
         $.getJSON('https://en.wikipedia.org/w/api.php?format=' + format + '&action=' + action + '&list=' + list + '&srprop=' + prop + '&srlimit=' + sizeWiki + '&srsearch=' + cityCode + "+" + stateCode + '&callback=?', function (data) {
             console.log(data);
             wikiPageTitle1 = data.query.search[0].title;
-            console.log(data.query.search[0].title);
-            $(".carousel").empty();
-            $(".carousel").removeClass("initialized");
+            wikiTitleParsed = wikiPageTitle1.split(' ').join('_');
+            wikiUrl = "https://en.wikipedia.org/wiki/" + wikiTitleParsed;
+            $(".carousel.wiki").empty();
+            $(".carousel.wiki").removeClass("initialized");
             // Loop to add all cards data pulled from API
             for (var i = 0; i < sizeWiki; i++) {
                 var n = i + 1;
@@ -216,20 +220,34 @@ $(function () {
                 // console.log(num);
 
                 var wikiPageTitle = data.query.search[i].title;
-
                 var wikiPageSnippet = data.query.search[i].snippet;
+                var wikiPageTitleParsed = wikiPageTitle.split(' ').join('_');
+                var wikiPageUrl = "https://en.wikipedia.org/wiki/" + wikiPageTitleParsed;
                 // console.log(wikiPageTitle);
                 // console.log(wikiPageSnippet);
                 // Loop to all cards pull form API
+                var wpSCDiv1 = $("<div>");
+                wpSCDiv1.addClass("card-panel tiny-facts");
+                var wpSCH1 = $("<h3>");
+                wpSCH1.addClass("wp-2-card-title");
+                wpSCH1.text(wikiPageTitle);
+                var wpSCSpanInfo = $("<span>");
+                wpSCSpanInfo.addClass("white-text wp-2-card-text");
+                wpSCSpanInfo.html(wikiPageSnippet);
+                var wpSCDiv2 = $("<div>");
+                wpSCDiv2.addClass("card-action center-align");
+                var wpSCA1 = $("<a>");
+                wpSCA1.addClass("btn btn-small center-align waves-effect wp-2-btn");
+                wpSCA1.attr("href", wikiPageUrl);
+                wpSCA1.attr("target", "_blank");
+                wpSCA1.text("READ MORE");
+                wpSCDiv2.append(wpSCA1)
+                wpSCDiv1.append(wpSCH1, wpSCSpanInfo, wpSCDiv2);
+                $("#wpSmallCards-feed").append(wpSCDiv1);
+
             }
-
-
+            $('.carousel wiki').carousel();
         }).then(function () {
-
-
-
-
-
             $.ajax({
                 type: "GET",
                 url: 'http://en.wikipedia.org/w/api.php?action=parse&format=json&prop=text&section=0&page=' + wikiPageTitle1 + '&callback=?',
@@ -237,10 +255,6 @@ $(function () {
                 async: false,
                 dataType: "json",
                 success: function (data, textStatus, jqXHR) {
-                    console.log(data);
-
-                    console.log(wikiPageTitle1);
-
                     var markup = data.parse.text["*"];
                     var blurb = $('<div>').html(markup);
 
@@ -252,43 +266,37 @@ $(function () {
 
                     // remove cite error
                     blurb.find('.mw-ext-cite-error').remove();
-                    $('#wp-feed').html($(blurb).find('p'));
-                    // console.log(blurb);
-
-                    //     var wpDiv1 = $("<div>");
-                    //     wpDiv1.addClass("card z-depth-2 ");
-                    //     var wpDiv2 = $("<div>");
-                    //     wpDiv2.addClass("card-content");
-                    //     var wpSpanTitle = $("<span>");
-                    //     wpSpanTitle.addClass("card-title activator grey-text text-darken-4");
-                    //     wpSpanTitle.text(wikiPageTitle);
-                    //     var wpDivInfo = $("<div>");
-                    //     wpDivInfo.addClass("card-content");
-                    //     var wpPInfo = $("<p>");
-                    //     wpPInfo.html(wikiPageSnippet);
-                    //     var wpDiv3 = $("<div>");
-                    //     wpDiv3.addClass("card-action");
-                    //     var wpA1 = $("<a>");
-                    //     wpA1.attr("href", "#");
-                    //     wpA1.text("READ MORE");
-                    //     wpDiv3.append(wpA1);
-                    //     wpDivInfo.append(wpPInfo);
-                    //     wpDiv2.append(wpSpanTitle);
-                    //     wpDiv2.append(wpSpanTitle, wpDivInfo, wpDiv3);
-                    //     wpDiv1.append(wpDiv2);
-                    //     $("#wp-feed").append(wpDiv1);
-
-                    //     $("#wp-feed").append(wpDiv1);
-
+                    var wpText = blurb.find('p');
+                    var trimLength = 10;
+                    var wpDiv1 = $("<div>");
+                    wpDiv1.addClass("card z-depth-2 ");
+                    wpDiv1.attr("Id", "wpInfo");
+                    var wpDiv2 = $("<div>");
+                    wpDiv2.addClass("card-content");
+                    var wpSpanTitle = $("<span>");
+                    wpSpanTitle.addClass("card-title activator grey-text text-darken-4");
+                    wpSpanTitle.text(wikiPageTitle1);
+                    var wpDivInfo = $("<div>");
+                    wpDivInfo.addClass("card-content");
+                    var wpPInfo = $("<p>");
+                    wpPInfo.html(wpText);
+                    var wpDiv3 = $("<div>");
+                    wpDiv3.addClass("card-action");
+                    var wpA1 = $("<a>");
+                    wpA1.attr("href", wikiUrl);
+                    wpA1.attr("target", "_blank");
+                    wpA1.text("READ MORE");
+                    wpDiv3.append(wpA1);
+                    wpDivInfo.append(wpPInfo);
+                    wpDiv2.append(wpSpanTitle);
+                    wpDiv2.append(wpSpanTitle, wpDivInfo, wpDiv3);
+                    wpDiv1.append(wpDiv2);
+                    $("#wp-feed").append(wpDiv1);
                 },
                 error: function (errorMessage) {
                 }
             });
         });
-
-
-
-
     }
 
 

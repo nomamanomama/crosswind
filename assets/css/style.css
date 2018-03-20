@@ -203,3 +203,7 @@ Can hide scroll bar if we come up with alt ui */
 .card{
     height: 360px;
 }
+
+#wpInfo {
+    height: auto;
+}
