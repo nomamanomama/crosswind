@@ -1,5 +1,11 @@
 // xplor
 
+
+$(document).ready(function(){
+    $('.carousel').carousel();
+    $('.carousel wiki').carousel();
+  });
+      
 var wikiPageTitle1;
 // Initialize Firebase
 var config = {
