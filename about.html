@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CROSSWIND</title>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Materialize CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Poiret+One" rel="stylesheet">
+    <!-- Firebase Style Sheet -->
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css" />
+    <!-- Style Sheet -->
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+    <!-- font awesome for social media -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S"
+        crossorigin="anonymous">
+
+</head>
+
+<body>
+    <!-- NAV BAR STARTS -->
+    <nav>
+        <div class="nav-wrapper z-depth-2 navbar-fixed nice-color">
+            <a href="./index.html" class="brand-logo center">CROSSWIND</a>
+            <a href="#" data-activates="mobile-side-nav" class="button-collapse">
+                <i class="material-icons">menu</i>
+            </a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li>
+                    <a class="waves-effect waves-light btn modal-trigger" href="#loginmodal">LOG IN</a>
+                </li>
+                <li>
+                    <a href="./about.html">ABOUT</a>
+                </li>
+                <li>
+                    <a href="#">SETTINGS</a>
+                </li>
+            </ul>
+            <!-- mobile side menu, needs jquery to initialize -->
+            <ul id="mobile-side-nav" class="side-nav">
+                <li>
+                    <a href="#">LOG IN</a>
+                </li>
+                <li>
+                    <a href="./about.html">ABOUT</a>
+                </li>
+                <li>
+                    <a href="#">SETTINGS</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- team member cards -->
+    <div class="container">
+        <div class="row">
+            <h2 id="about-title">MEET THE TEAM</h2>
+        </div>
+
+        <div class="row" id="about-card-row">
+            <div class="col s12 m4 about-card">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="./assets/images/tm-1.jpg">
+                        <span class="card-title" id="Name1">Card Title</span>
+                    </div>
+                    <div class="card-content">
+                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
+                            I require little markup to use effectively.</p>
+                    </div>
+                    <div class="card-action">
+                        <div>
+                            <ul class="sm-btns">
+                                <li>
+                                    <a class="btn-floating">
+                                        <i class="fas fa-home fa-2x"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="btn-floating">
+                                        <i class="fab fa-github-alt fa-2x"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="btn-floating">
+                                        <i class="fab fa-linkedin fa-2x"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m4 about-card" id="middle-card">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="./assets/images/tm-1.jpg">
+                        <span class="card-title" id="Name1">Card Title</span>
+                    </div>
+                    <div class="card-content">
+                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
+                            I require little markup to use effectively.</p>
+                    </div>
+                    <div class="card-action">
+                        <div>
+                            <ul class="sm-btns">
+                                <li>
+                                    <a class="btn-floating">
+                                        <i class="fas fa-home fa-3x"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="btn-floating">
+                                        <i class="fab fa-github-alt fa-2x"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="btn-floating">
+                                        <i class="fab fa-linkedin fa-2x"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m4 about-card">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="./assets/images/tm-1.jpg">
+                        <span class="card-title" id="Name1">Card Title</span>
+                    </div>
+                    <div class="card-content">
+                        <p>I am a very simple card. I am good at containing small bits of information. I am convenient because
+                            I require little markup to use effectively.</p>
+                    </div>
+                    <div class="card-action">
+                        <div>
+                            <ul class="sm-btns">
+                                <li>
+                                    <a class="btn-floating">
+                                        <i class="fas fa-home fa-3x"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="btn-floating">
+                                        <i class="fab fa-github-alt fa-2x"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="btn-floating">
+                                        <i class="fab fa-linkedin fa-2x"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Firebase sign-in widget-->
+    <div id="loginmodal" class="modal">
+        <div class="modal-content">
+            <div id="firebaseui-auth-container"></div>
+            <div id="loader">Loading...</div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- JQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- JavaScript for Materialize -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    <!-- Firebase Realtime DB  -->
+    <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+
+    <!-- Firebase Authentication -->
+    <script src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script>
+
+    <!-- Google Maps API  -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7qKO6Pu0BX0_Hh7xtqJrFBqCR1hxegDo&callback=initMap" async
+        defer></script>
+
+    <!-- JavaScript File -->
+    <script src="./assets/javascript/logic.js"></script>
+
+</body>
+
+</html>
