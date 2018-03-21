@@ -450,6 +450,24 @@ function populateCommunityMarkers() {
 
     //on initial load with gm_markers array empty, fill the array with community saved pins
     if (gm_markers.length === 0) {
+        // Origins, anchor positions and coordinates of the marker increase in the X
+        // direction to the right and in the Y direction down.
+        var image = {
+            url: './assets/images/windsock.png',
+            // This marker is 32 pixels wide by 32 pixels high.
+            size: new google.maps.Size(50, 50),
+            // The origin for this image is (0, 0).
+            origin: new google.maps.Point(0, 0),
+            // The anchor for this image is the base of the flagpole at (16, 32).
+            anchor: new google.maps.Point(25, 50)
+        };
+        // Shapes define the clickable region of the icon. The type defines an HTML
+        // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+        // The final coordinate closes the poly by connecting to the first coordinate.
+        var shape = {
+            coords: [17,4,48,1,48,5,23,15,25,48,1,49,1,16,17,4],
+            type: 'poly'
+        };
         //get a snapshot of the database 
         db.ref().once("value", function (snapshot) {
             if (snapshot.val().community) {
@@ -460,7 +478,9 @@ function populateCommunityMarkers() {
                     var pos = new google.maps.LatLng(parseFloat(latLng[0]), parseFloat(latLng[1]));
                     var marker = new google.maps.Marker({
                         position: (pos),
-                        map: gm_map
+                        map: gm_map,
+                        icon: image,
+                        shape: shape
                     });
                 });
             }
