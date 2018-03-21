@@ -134,8 +134,8 @@ Can hide scroll bar if we come up with alt ui */
   .carousel .indicators {
       padding:0;
       margin:0;
-      background-color: #ffffff;
-
+      /* background-color: #ffffff; */
+      background-color: #295550;
   }
 
   #Name1 {
@@ -183,11 +183,12 @@ Can hide scroll bar if we come up with alt ui */
 
   .tiny-facts {
       background-color: #295550;
+      /* height: 100%; */
   }
 
-.wp-2-card-text {
+ .wp-2-card-text {
     text-shadow: 1.5px 1.5px 1px #272626;
-}
+ }
 
   .wp-2-card-title {
       color: #ffffff;

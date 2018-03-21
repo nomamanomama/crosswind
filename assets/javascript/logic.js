@@ -193,7 +193,7 @@ $(function () {
     function getWiki() {
         // Wikipedia Search Word Keys
         // https://www.mediawiki.org/wiki/API:Search
-        var sizeWiki = 6;
+        var sizeWiki = 20;
         var format = "json";
         var action = "query";
         var generator = "search";
@@ -211,8 +211,8 @@ $(function () {
             wikiPageTitle1 = data.query.search[0].title;
             wikiTitleParsed = wikiPageTitle1.split(' ').join('_');
             wikiUrl = "https://en.wikipedia.org/wiki/" + wikiTitleParsed;
-            $(".carousel.wiki").empty();
-            $(".carousel.wiki").removeClass("initialized");
+            $('.carousel.carousel-slider').empty();
+            $('.carousel.carousel-slider').removeClass("initialized");
             // Loop to add all cards data pulled from API
             for (var i = 0; i < sizeWiki; i++) {
                 var n = i + 1;
@@ -226,6 +226,9 @@ $(function () {
                 // console.log(wikiPageTitle);
                 // console.log(wikiPageSnippet);
                 // Loop to all cards pull form API
+                var wpSCA = $("<a>");
+                wpSCA.addClass("carousel-item");
+                wpSCA.attr("href", "#" + num + "!");
                 var wpSCDiv1 = $("<div>");
                 wpSCDiv1.addClass("card-panel tiny-facts");
                 var wpSCH1 = $("<h3>");
@@ -235,7 +238,7 @@ $(function () {
                 wpSCSpanInfo.addClass("white-text wp-2-card-text");
                 wpSCSpanInfo.html(wikiPageSnippet);
                 var wpSCDiv2 = $("<div>");
-                wpSCDiv2.addClass("card-action center-align");
+                wpSCDiv2.addClass("card-action center-align tiny-facts");
                 var wpSCA1 = $("<a>");
                 wpSCA1.addClass("btn btn-small center-align waves-effect wp-2-btn");
                 wpSCA1.attr("href", wikiPageUrl);
@@ -243,10 +246,11 @@ $(function () {
                 wpSCA1.text("READ MORE");
                 wpSCDiv2.append(wpSCA1)
                 wpSCDiv1.append(wpSCH1, wpSCSpanInfo, wpSCDiv2);
-                $("#wpSmallCards-feed").append(wpSCDiv1);
+                wpSCA.append(wpSCDiv1);
+                $(".carousel").append(wpSCA);
 
             }
-            $('.carousel wiki').carousel();
+            $('.carousel.carousel-slider').carousel({fullWidth: true});
         }).then(function () {
             $.ajax({
                 type: "GET",
