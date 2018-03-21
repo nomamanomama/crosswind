@@ -141,7 +141,8 @@ Can hide scroll bar if we come up with alt ui */
   #Name1 {
       color: #153834;
       font-size: 24px;
-      padding:10px;
+      
+      padding:0px;
       font-family: 'Poiret One', 'Buda', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
       font-size: 1.5rem;
       font-weight: bold;
@@ -205,6 +206,14 @@ Can hide scroll bar if we come up with alt ui */
     height: 360px;
 }
 
+.about-card .card {
+    height:unset;
+}
+
 #wpInfo {
     height: auto;
+}
+
+.about-card .container {
+    width:90%; 
 }
