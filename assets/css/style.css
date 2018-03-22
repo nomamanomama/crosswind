@@ -217,3 +217,16 @@ Can hide scroll bar if we come up with alt ui */
 .about-card .container {
     width:90%; 
 }
+
+
+#addMarker-row {
+display: flex;
+flex-direction: column;
+justify-content:center;
+align-items: center;
+height: 400px;
+}
+
+#tiny-sock{
+    vertical-align: middle;
+}

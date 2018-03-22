@@ -453,7 +453,7 @@ function populateCommunityMarkers() {
         // Origins, anchor positions and coordinates of the marker increase in the X
         // direction to the right and in the Y direction down.
         var image = {
-            url: './assets/images/windsock.png',
+            url: './assets/images/windsock-v5.png',
             // This marker is 32 pixels wide by 32 pixels high.
             size: new google.maps.Size(50, 50),
             // The origin for this image is (0, 0).
