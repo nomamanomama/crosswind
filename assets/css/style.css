@@ -232,8 +232,6 @@ transform: translateY(0px);
     top: 0;
     left: 0px;
 
-
-
 #addMarker-row {
 display: flex;
 flex-direction: column;
@@ -246,3 +244,19 @@ height: 400px;
     vertical-align: middle;
 
 }
+
+#wp-row .card .card-content p{
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#wp-row .card a{
+    color: #295550;
+}
+
+#wp-row .card a:hover{
+    color: #31635d;
+    text-shadow: 1px 1px 4px #bfbfbf;
+    
+}
+
