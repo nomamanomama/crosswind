@@ -221,7 +221,7 @@ Can hide scroll bar if we come up with alt ui */
     width:90%; 
 }
 /* .carousel {
-transform: translateY(-50px);
+transform: translateY(0px);
 } */
 .carousel .carousel-item {
     display: none;
