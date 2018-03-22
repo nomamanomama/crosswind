@@ -230,3 +230,19 @@ height: 400px;
 #tiny-sock{
     vertical-align: middle;
 }
+
+#wp-row .card .card-content p{
+    max-height: 400px;
+    overflow-y: auto;
+    
+}
+
+#wp-row .card a{
+    color: #295550;
+}
+
+#wp-row .card a:hover{
+    color: #31635d;
+    text-shadow: 1px 1px 4px #bfbfbf;
+    
+}
