@@ -231,6 +231,7 @@ transform: translateY(0px);
     position: absolute;
     top: 0;
     left: 0px;
+}
 
 #addMarker-row {
 display: flex;
