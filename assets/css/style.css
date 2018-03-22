@@ -200,12 +200,15 @@ Can hide scroll bar if we come up with alt ui */
       text-transform: uppercase;
       letter-spacing: 2px;
       text-shadow: 1.5px 1.5px 1px #272626;
+      margin-bottom: 10px;
   }
 
 .card{
     height: 360px;
 }
-
+.card-action {
+    margin-top: 10px;
+}
 .about-card .card {
     height:unset;
 }
@@ -218,6 +221,16 @@ Can hide scroll bar if we come up with alt ui */
     width:90%; 
 }
 
+/* .carousel {
+transform: translateY(0px);
+} */
+.carousel .carousel-item {
+    display: none;
+    width: 400px;
+    height: 300px;
+    position: absolute;
+    top: 0;
+    left: 0px;
 
 #addMarker-row {
 display: flex;
@@ -229,12 +242,12 @@ height: 400px;
 
 #tiny-sock{
     vertical-align: middle;
+
 }
 
 #wp-row .card .card-content p{
     max-height: 400px;
     overflow-y: auto;
-    
 }
 
 #wp-row .card a{
@@ -246,3 +259,4 @@ height: 400px;
     text-shadow: 1px 1px 4px #bfbfbf;
     
 }
+
