@@ -1,8 +1,8 @@
 // xplor
-$(document).ready(function () {
-    $('.carousel').carousel();
+// $(document).ready(function () {
+//     $('.carousel').carousel();
 
-});
+// });
 // Global Variables
 var wikiPageTitle1;
 var wikiTitleParsed;
@@ -193,7 +193,7 @@ $(function () {
     function getWiki() {
         // Wikipedia Search Word Keys
         // https://www.mediawiki.org/wiki/API:Search
-        var sizeWiki = 20;
+        var sizeWiki = 6;
         var format = "json";
         var action = "query";
         var generator = "search";
@@ -211,8 +211,8 @@ $(function () {
             wikiPageTitle1 = data.query.search[0].title;
             wikiTitleParsed = wikiPageTitle1.split(' ').join('_');
             wikiUrl = "https://en.wikipedia.org/wiki/" + wikiTitleParsed;
-            $('.carousel.carousel-slider').empty();
-            $('.carousel.carousel-slider').removeClass("initialized");
+            $('.carousel').empty();
+            $('.carousel').removeClass("initialized");
             // Loop to add all cards data pulled from API
             for (var i = 0; i < sizeWiki; i++) {
                 var n = i + 1;
@@ -227,7 +227,7 @@ $(function () {
                 // console.log(wikiPageSnippet);
                 // Loop to all cards pull form API
                 var wpSCA = $("<a>");
-                wpSCA.addClass("carousel-item");
+                wpSCA.addClass("carousel-item wikiCard");
                 wpSCA.attr("href", "#" + num + "!");
                 var wpSCDiv1 = $("<div>");
                 wpSCDiv1.addClass("card-panel tiny-facts");
@@ -238,7 +238,7 @@ $(function () {
                 wpSCSpanInfo.addClass("white-text wp-2-card-text");
                 wpSCSpanInfo.html(wikiPageSnippet);
                 var wpSCDiv2 = $("<div>");
-                wpSCDiv2.addClass("card-action center-align tiny-facts");
+                wpSCDiv2.addClass("card-action center-align ");
                 var wpSCA1 = $("<a>");
                 wpSCA1.addClass("btn btn-small center-align waves-effect wp-2-btn");
                 wpSCA1.attr("href", wikiPageUrl);
@@ -250,7 +250,8 @@ $(function () {
                 $(".carousel").append(wpSCA);
 
             }
-            $('.carousel.carousel-slider').carousel({fullWidth: true});
+            // $('.carousel').carousel({fullWidth: true});
+            $('.carousel').carousel({shift:0});
         }).then(function () {
             $.ajax({
                 type: "GET",
@@ -270,6 +271,7 @@ $(function () {
 
                     // remove cite error
                     blurb.find('.mw-ext-cite-error').remove();
+                    $("#wp-feed").empty();
                     var wpText = blurb.find('p');
                     var trimLength = 10;
                     var wpDiv1 = $("<div>");
