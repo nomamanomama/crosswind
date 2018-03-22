@@ -89,7 +89,12 @@ $(function () {
     });
 
 
-
+//autoplays the small facts from wiki
+autoplay();
+    function autoplay() {
+        $('.carousel').carousel('next');
+        setTimeout(autoplay, 6500);
+    }
 
 
 
@@ -206,6 +211,8 @@ $(function () {
         var list = "search";
         console.log(cityCode, stateCode);
 
+          
+
         $.getJSON('https://en.wikipedia.org/w/api.php?format=' + format + '&action=' + action + '&list=' + list + '&srprop=' + prop + '&srlimit=' + sizeWiki + '&srsearch=' + cityCode + "+" + stateCode + '&callback=?', function (data) {
             console.log(data);
             wikiPageTitle1 = data.query.search[0].title;
@@ -248,10 +255,14 @@ $(function () {
                 wpSCDiv1.append(wpSCH1, wpSCSpanInfo, wpSCDiv2);
                 wpSCA.append(wpSCDiv1);
                 $(".carousel").append(wpSCA);
+                
 
             }
             // $('.carousel').carousel({fullWidth: true});
-            $('.carousel').carousel({shift:0});
+
+
+
+            $('.carousel').carousel({ shift: 0 });
         }).then(function () {
             $.ajax({
                 type: "GET",
@@ -298,6 +309,7 @@ $(function () {
                     wpDiv2.append(wpSpanTitle, wpDivInfo, wpDiv3);
                     wpDiv1.append(wpDiv2);
                     $("#wp-feed").append(wpDiv1);
+                    
                 },
                 error: function (errorMessage) {
                 }
@@ -467,7 +479,7 @@ function populateCommunityMarkers() {
         // <area> element 'poly' which traces out a polygon as a series of X,Y points.
         // The final coordinate closes the poly by connecting to the first coordinate.
         var shape = {
-            coords: [17,4,48,1,48,5,23,15,25,48,1,49,1,16,17,4],
+            coords: [17, 4, 48, 1, 48, 5, 23, 15, 25, 48, 1, 49, 1, 16, 17, 4],
             type: 'poly'
         };
         //get a snapshot of the database 
