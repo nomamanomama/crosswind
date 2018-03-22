@@ -220,6 +220,7 @@ Can hide scroll bar if we come up with alt ui */
 .about-card .container {
     width:90%; 
 }
+
 /* .carousel {
 transform: translateY(0px);
 } */
@@ -230,4 +231,18 @@ transform: translateY(0px);
     position: absolute;
     top: 0;
     left: 0px;
+
+
+
+#addMarker-row {
+display: flex;
+flex-direction: column;
+justify-content:center;
+align-items: center;
+height: 400px;
+}
+
+#tiny-sock{
+    vertical-align: middle;
+
 }

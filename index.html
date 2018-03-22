@@ -16,6 +16,9 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css" />
     <!-- Style Sheet -->
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+    <!-- font awesome for social media -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S"
+        crossorigin="anonymous">
 
 
 </head>
@@ -30,7 +33,7 @@
             </a>
             <ul id="nav-mobile" class="left hide-on-med-and-down">
                 <li>
-                    <a class="waves-effect waves-light btn modal-trigger" href="#loginmodal">LOG IN</a>
+                    <a class="modal-trigger" href="#loginmodal">LOG IN</a>
                 </li>
                 <li>
                     <a href="./about.html">ABOUT</a>
@@ -85,9 +88,20 @@
         <!-- GOOGLE MAPS -->
         <div class="container">
             <div id="map-controls">
-                <button type="submit" id="addMarker" value="foo">Pin it</button>
             </div>
-            <div id="map"></div>
+            <div class="row">
+                <div class="col s12">
+                    <div id="map">
+                    </div>
+                </div>
+                <div class="col s1">
+                    <div id="addMarker-row">
+                        <a class="btn-floating btn-large tooltipped" data-position="right" data-delay="50" data-tooltip="Add Your Location" type="submit" id="addMarker" value="foo">
+                            <img class="material-icons" id="tiny-sock" src="./assets/images/tiny-sock-38px.png">
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- TICKET MASTER ROW BEGINS HERE -->
@@ -95,9 +109,9 @@
         <div class="container">
             <div class="row">
                 <div class="col s1 hide-on-med-and-down" id="left-scroll-col">
-                    <button type="button" class="btn-floating red btn-large tm-scroll" id="left-scroll" value="left">
+                    <a type="button" class="btn-floating btn-large tm-scroll" id="left-scroll" value="left">
                         <i class="large material-icons">chevron_left</i>
-                        </a>
+                    </a>
                 </div>
                 <div class="col s12">
                     <div id="tm-feed">
@@ -139,7 +153,7 @@
 
                 </div>
                 <div class="col s1 tm-scroll-btn hide-on-med-and-down" id="right-scroll-col">
-                    <button type="button" class="btn-floating red btn-large tm-scroll" id="right-scroll" value="right">
+                    <button type="button" class="btn-floating btn-large tm-scroll" id="right-scroll" value="right">
                         <i class="large material-icons">chevron_right</i>
                     </button>
                 </div>
@@ -148,7 +162,14 @@
         </div>
     </div>
 
-
+    <!-- WIKIPEDIA ROW BEGINS HERE -->
+    <div class="row" id="wp-row">
+        <div class="container">
+            <div class="col s12">
+                <div id="wp-feed"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- WIKIPEDIA TINY FACTS ROW BEGINS HERE -->
     <div class="row" id="wp-2-row">
@@ -158,14 +179,9 @@
             </div>
         </div>
     </div>
-    <!-- WIKIPEDIA ROW BEGINS HERE -->
-    <div class="row" id="wp-row">
-        <div class="container">
-            <div class="col s12">
-                <div id="wp-feed"></div>
-            </div>
-        </div>
-    </div>
+
+
+
     <!-- Number to Words -->
     <script type="text/javascript" src="./assets/javascript/numberToWords.min.js"></script>
 
