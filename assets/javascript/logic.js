@@ -89,7 +89,12 @@ $(function () {
     });
 
 
-
+//autoplays the small facts from wiki
+autoplay();
+    function autoplay() {
+        $('.carousel').carousel('next');
+        setTimeout(autoplay, 6500);
+    }
 
 
 
@@ -204,6 +209,7 @@ $(function () {
         var exsentences = "1";
         var exlimit = "max";
         var list = "search";
+
         var srsearch ;
         // console.log(cityCode, stateCode);
         if (InputType === 1) {
@@ -213,6 +219,7 @@ $(function () {
         }
         $.getJSON('https://en.wikipedia.org/w/api.php?format=' + format + '&action=' + action + '&list=' + list + '&srprop=' + prop + '&srlimit=' + sizeWiki + '&srsearch=' + srsearch + '&callback=?', function (data) {
             // console.log(data);
+
             wikiPageTitle1 = data.query.search[0].title;
             wikiTitleParsed = wikiPageTitle1.split(' ').join('_');
             wikiUrl = "https://en.wikipedia.org/wiki/" + wikiTitleParsed;
@@ -253,9 +260,11 @@ $(function () {
                 wpSCDiv1.append(wpSCH1, wpSCSpanInfo, wpSCDiv2);
                 wpSCA.append(wpSCDiv1);
                 $(".carousel").append(wpSCA);
+                
 
             }
             // $('.carousel').carousel({fullWidth: true});
+
             $('.carousel').carousel({ shift: 0 });
         }).then(function () {
             $.ajax({
@@ -303,6 +312,7 @@ $(function () {
                     wpDiv2.append(wpSpanTitle, wpDivInfo, wpDiv3);
                     wpDiv1.append(wpDiv2);
                     $("#wp-feed").append(wpDiv1);
+                    
                 },
                 error: function (errorMessage) {
                 }
