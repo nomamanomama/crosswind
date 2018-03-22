@@ -85,7 +85,37 @@
         <!-- GOOGLE MAPS -->
         <div class="container">
             <div id="map-controls">
-                <button type="submit" id="addMarker" value="foo">Pin it</button>
+                <button type="submit" id="addMarker" class="waves-effect waves-light btn modal-trigger">Pin it</button>
+                <button type="button" id="addMarkerInfo" class="waves-effect waves-light btn modal-trigger disabled" href="#commentmodal">Comment</button>
+            </div>
+            <div id="commentmodal" class="modal">
+                <div class="modal-content">
+                    <div id="cityBoardName">
+            
+                    </div>
+                    <div class="row" id="cityBoard">
+                        <form class="col s12">
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input placeholder="Anonymous" id="commentBy" type="text" data-length="10">
+                                    <label for="commentBy">Name</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea id="commentMsg" class="materialize-textarea" data-length="120"></textarea>
+                                    <label for="commentMsg">Message</label>
+                                </div>
+                            </div>
+                            <button class="btn waves-effect waves-light" type="submit" name="action">Add
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+                </div>
             </div>
             <div id="map"></div>
         </div>
