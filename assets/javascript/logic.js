@@ -116,7 +116,7 @@ autoplay();
             async: true,
             dataType: "json",
             success: function (json) {
-                console.log(json._embedded.events);
+                // console.log(json._embedded.events);
                 $("#tm-feed").empty();
                 // Loop to all cards pull form API
                 for (var i = 0; i < size; i++) {
@@ -209,12 +209,17 @@ autoplay();
         var exsentences = "1";
         var exlimit = "max";
         var list = "search";
-        console.log(cityCode, stateCode);
 
-          
+        var srsearch ;
+        // console.log(cityCode, stateCode);
+        if (InputType === 1) {
+            var srsearch = cityCode + "+" + stateCode;
+        } else if (InputType === 2) {
+            var srsearch = zipCode;
+        }
+        $.getJSON('https://en.wikipedia.org/w/api.php?format=' + format + '&action=' + action + '&list=' + list + '&srprop=' + prop + '&srlimit=' + sizeWiki + '&srsearch=' + srsearch + '&callback=?', function (data) {
+            // console.log(data);
 
-        $.getJSON('https://en.wikipedia.org/w/api.php?format=' + format + '&action=' + action + '&list=' + list + '&srprop=' + prop + '&srlimit=' + sizeWiki + '&srsearch=' + cityCode + "+" + stateCode + '&callback=?', function (data) {
-            console.log(data);
             wikiPageTitle1 = data.query.search[0].title;
             wikiTitleParsed = wikiPageTitle1.split(' ').join('_');
             wikiUrl = "https://en.wikipedia.org/wiki/" + wikiTitleParsed;
@@ -259,8 +264,6 @@ autoplay();
 
             }
             // $('.carousel').carousel({fullWidth: true});
-
-
 
             $('.carousel').carousel({ shift: 0 });
         }).then(function () {
@@ -330,24 +333,27 @@ autoplay();
         // console.log(regexp2.test(location))
 
         if (regexp1.test(location)) {
-
-
             console.log("city, state");
-            //location = location.replace(/,\s?/g, " ");
             location = location.split(",");
-
             cityCode = location[0];
             stateCode = location[1];
-            // console.log(cityCode);
-            // console.log(stateCode);
             InputType = 1;
-
+            console.log(stateCode.length);
+            console.log(stateCode);
+            
+            
+            $("#tm-row").hide();
+            if (stateCode.length === 3) {
+                $("#tm-row").show();}
         } else if (regexp2.test(location)) {
+            $("#tm-row").show();
             // console.log("zip");
             zipCode = location;
             InputType = 2;
-
         }
+
+        
+
         findGeo(cityCode + "," + stateCode);
         findTickets();
         getWiki();
@@ -356,7 +362,7 @@ autoplay();
 
 
     $("#addMarker").on("click", function () {
-        console.log("add a marker");
+        // console.log("add a marker");
 
         var lat = gm_marker.getPosition().lat();
         var lng = gm_marker.getPosition().lng();
@@ -397,13 +403,13 @@ function findGeo(address) {
         async: true,
         dataType: "json",
         success: function (response) {
-            console.log(response.results);
+            // console.log(response.results);
             //check length of response results
             if (response.results.length !== 0) {
                 gm_geoLat = response.results[0].geometry.location.lat;
                 gm_geoLng = response.results[0].geometry.location.lng;
 
-                console.log("Location: " + gm_geoLat, ", " + gm_geoLng);
+                // console.log("Location: " + gm_geoLat, ", " + gm_geoLng);
                 updatePosition();
             }
         },
