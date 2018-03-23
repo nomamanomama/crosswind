@@ -16,6 +16,9 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css" />
     <!-- Style Sheet -->
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+    <!-- font awesome for social media -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S"
+        crossorigin="anonymous">
 
 
 </head>
@@ -30,7 +33,7 @@
             </a>
             <ul id="nav-mobile" class="left hide-on-med-and-down">
                 <li>
-                    <a class="waves-effect waves-light btn modal-trigger" href="#loginmodal">LOG IN</a>
+                    <a class="modal-trigger" href="#loginmodal">LOG IN</a>
                 </li>
                 <li>
                     <a href="./about.html">ABOUT</a>
@@ -75,9 +78,9 @@
                         <!-- <input 
                             id="gm-input" 
                             type="tel"  -->
-                        <input class="validate" id="gm-input-location" type="text" title="City Name, 2-Digit State or Country Codes  or 5-Digit Zip Code"
-                            pattern="(([0-9]{5})|([\w ]+, \w{2}))">
-                        <label for="gm-input-location">City, State/Country or US Postal Code</label>
+                        <input class="validate" id="gm-input-location" type="text" title="City Name, 2-Digit State or Country"
+                            pattern="(([0-9]{5})|([\w ]+, [\w]+))">
+                        <label for="gm-input-location">City, State/Country</label>
                     </div>
                 </div>
             </div>
@@ -86,7 +89,6 @@
         <div class="container">
             <div id="map-controls">
                 <button type="submit" id="addMarker" class="waves-effect waves-light btn modal-trigger" href="#commentmodal">Pin it</button>
-                <!-- <button type="button" id="addMarkerInfo" class="waves-effect waves-light btn modal-trigger disabled" href="#commentmodal">Comment</button> -->
             </div>
             <div id="commentmodal" class="modal">
                 <div class="modal-content">
@@ -117,7 +119,19 @@
                     <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
                 </div>
             </div>
-            <div id="map"></div>
+            <div class="row">
+                <div class="col s12">
+                    <div id="map">
+                    </div>
+                </div>
+                <div class="col s1">
+                    <div id="addMarker-row">
+                        <a class="btn-floating btn-large tooltipped" data-position="right" data-delay="50" data-tooltip="Add Your Location" type="submit" id="addMarker" value="foo">
+                            <img class="material-icons" id="tiny-sock" src="./assets/images/tiny-sock-38px.png">
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- TICKET MASTER ROW BEGINS HERE -->
@@ -125,9 +139,9 @@
         <div class="container">
             <div class="row">
                 <div class="col s1 hide-on-med-and-down" id="left-scroll-col">
-                    <button type="button" class="btn-floating red btn-large tm-scroll" id="left-scroll" value="left">
+                    <a type="button" class="btn-floating btn-large tm-scroll" id="left-scroll" value="left">
                         <i class="large material-icons">chevron_left</i>
-                        </a>
+                    </a>
                 </div>
                 <div class="col s12">
                     <div id="tm-feed">
@@ -169,7 +183,7 @@
 
                 </div>
                 <div class="col s1 tm-scroll-btn hide-on-med-and-down" id="right-scroll-col">
-                    <button type="button" class="btn-floating red btn-large tm-scroll" id="right-scroll" value="right">
+                    <button type="button" class="btn-floating btn-large tm-scroll" id="right-scroll" value="right">
                         <i class="large material-icons">chevron_right</i>
                     </button>
                 </div>
@@ -178,72 +192,6 @@
         </div>
     </div>
 
-
-
-    <!-- WIKIPEDIA TINY FACTS ROW BEGINS HERE -->
-    <div class="row" id="wp-2-row">
-        <div class="container">
-            <div class="col s12">
-                <div id="wpSmallCards-feed" class="carousel carousel-slider tiny-facts" data-indicators="true"></div>
-                <!-- 
-                <div class="card-panel tiny-facts">
-                    <h3 class="wp-2-card-title">Title</h3>
-                    <span class="white-text wp-2-card-text">I am a very simple card. I am good at containing small bits of information. I am convenient because I
-                        require little markup to use effectively. I am similar to what is called a panel in other frameworks.
-                    </span>
-                    <div class="card-action center-align">
-                        <a class="btn btn-small center-align waves-effect wp-2-btn">READ MORE</a>
-                    </div>
-                </div>
-                <div class="carousel wiki">
-                    <a class="carousel-item" href="#one!">
-                        <div class="card-panel tiny-facts">
-                            <h3 class="wp-2-card-title">Title</h3>
-                            <div class="card-panel teal">
-                                <span class="white-text">I am a very simple card. I am good at containing small bits of information. I am convenient
-                                    because I require little markup to use effectively. I am similar to what is called a
-                                    panel in other frameworks.
-                                </span>
-                            </div>
-                            </div>
-                    </a>
-                    <a class="carousel-item" href="#two!">
-                        <div class="card-panel teal">
-                            <span class="white-text">I am a very simple card. I am good at containing small bits of information. I am convenient because
-                                I require little markup to use effectively. I am similar to what is called a panel in other
-                                frameworks.
-                            </span>
-                        </div>
-                    </a>
-                    <a class="carousel-item" href="#three!">
-                        <div class="card-panel teal">
-                            <span class="white-text">I am a very simple card. I am good at containing small bits of information. I am convenient because
-                                I require little markup to use effectively. I am similar to what is called a panel in other
-                                frameworks.
-                            </span>
-                        </div>
-                    </a>
-                    <a class="carousel-item" href="#four!">
-                        <div class="card-panel teal">
-                            <span class="white-text">I am a very simple card. I am good at containing small bits of information. I am convenient because
-                                I require little markup to use effectively. I am similar to what is called a panel in other
-                                frameworks.
-                            </span>
-                        </div>
-                    </a>
-                    <a class="carousel-item" href="#five!">
-                        <div class="card-panel teal">
-                            <span class="white-text">I am a very simple card. I am good at containing small bits of information. I am convenient because
-                                I require little markup to use effectively. I am similar to what is called a panel in other
-                                frameworks.
-                            </span>
-                        </div>
-                    </a>
-                    </div>
-                </div> -->
-            </div>
-        </div>
-    </div>
     <!-- WIKIPEDIA ROW BEGINS HERE -->
     <div class="row" id="wp-row">
         <div class="container">
@@ -252,6 +200,18 @@
             </div>
         </div>
     </div>
+
+    <!-- WIKIPEDIA TINY FACTS ROW BEGINS HERE -->
+    <div class="row" id="wp-2-row">
+        <div class="container">
+            <div class="col s12">
+                <div id="mycarousel" class="carousel" ></div>
+            </div>
+        </div>
+    </div>
+
+
+
     <!-- Number to Words -->
     <script type="text/javascript" src="./assets/javascript/numberToWords.min.js"></script>
 

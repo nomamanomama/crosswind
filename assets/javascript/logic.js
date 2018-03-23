@@ -1,8 +1,8 @@
 // xplor
-$(document).ready(function () {
-    $('.carousel').carousel();
+// $(document).ready(function () {
+//     $('.carousel').carousel();
 
-});
+// });
 // Global Variables
 var wikiPageTitle1;
 var wikiTitleParsed;
@@ -91,11 +91,16 @@ $(function () {
     });
 
 
+
     //activate character count for add communitycomment form
     $('input#commentBy, textarea#commentMsg').characterCounter();
 
-
-
+//autoplays the small facts from wiki
+autoplay();
+    function autoplay() {
+        $('.carousel').carousel('next');
+        setTimeout(autoplay, 6500);
+    }
 
     // ---------------------
     // ticket master API AJAX call function
@@ -114,7 +119,7 @@ $(function () {
             async: true,
             dataType: "json",
             success: function (json) {
-                console.log(json._embedded.events);
+                // console.log(json._embedded.events);
                 $("#tm-feed").empty();
                 // Loop to all cards pull form API
                 for (var i = 0; i < size; i++) {
@@ -196,7 +201,7 @@ $(function () {
     function getWiki() {
         // Wikipedia Search Word Keys
         // https://www.mediawiki.org/wiki/API:Search
-        var sizeWiki = 20;
+        var sizeWiki = 6;
         var format = "json";
         var action = "query";
         var generator = "search";
@@ -207,15 +212,22 @@ $(function () {
         var exsentences = "1";
         var exlimit = "max";
         var list = "search";
-        console.log(cityCode, stateCode);
 
-        $.getJSON('https://en.wikipedia.org/w/api.php?format=' + format + '&action=' + action + '&list=' + list + '&srprop=' + prop + '&srlimit=' + sizeWiki + '&srsearch=' + cityCode + "+" + stateCode + '&callback=?', function (data) {
-            console.log(data);
+        var srsearch ;
+        // console.log(cityCode, stateCode);
+        if (InputType === 1) {
+            var srsearch = cityCode + "+" + stateCode;
+        } else if (InputType === 2) {
+            var srsearch = zipCode;
+        }
+        $.getJSON('https://en.wikipedia.org/w/api.php?format=' + format + '&action=' + action + '&list=' + list + '&srprop=' + prop + '&srlimit=' + sizeWiki + '&srsearch=' + srsearch + '&callback=?', function (data) {
+            // console.log(data);
+
             wikiPageTitle1 = data.query.search[0].title;
             wikiTitleParsed = wikiPageTitle1.split(' ').join('_');
             wikiUrl = "https://en.wikipedia.org/wiki/" + wikiTitleParsed;
-            $('.carousel.carousel-slider').empty();
-            $('.carousel.carousel-slider').removeClass("initialized");
+            $('.carousel').empty();
+            $('.carousel').removeClass("initialized");
             // Loop to add all cards data pulled from API
             for (var i = 0; i < sizeWiki; i++) {
                 var n = i + 1;
@@ -230,7 +242,7 @@ $(function () {
                 // console.log(wikiPageSnippet);
                 // Loop to all cards pull form API
                 var wpSCA = $("<a>");
-                wpSCA.addClass("carousel-item");
+                wpSCA.addClass("carousel-item wikiCard");
                 wpSCA.attr("href", "#" + num + "!");
                 var wpSCDiv1 = $("<div>");
                 wpSCDiv1.addClass("card-panel tiny-facts");
@@ -241,7 +253,7 @@ $(function () {
                 wpSCSpanInfo.addClass("white-text wp-2-card-text");
                 wpSCSpanInfo.html(wikiPageSnippet);
                 var wpSCDiv2 = $("<div>");
-                wpSCDiv2.addClass("card-action center-align tiny-facts");
+                wpSCDiv2.addClass("card-action center-align ");
                 var wpSCA1 = $("<a>");
                 wpSCA1.addClass("btn btn-small center-align waves-effect wp-2-btn");
                 wpSCA1.attr("href", wikiPageUrl);
@@ -251,9 +263,12 @@ $(function () {
                 wpSCDiv1.append(wpSCH1, wpSCSpanInfo, wpSCDiv2);
                 wpSCA.append(wpSCDiv1);
                 $(".carousel").append(wpSCA);
+                
 
             }
-            $('.carousel.carousel-slider').carousel({fullWidth: true});
+            // $('.carousel').carousel({fullWidth: true});
+
+            $('.carousel').carousel({ shift: 0 });
         }).then(function () {
             $.ajax({
                 type: "GET",
@@ -273,6 +288,7 @@ $(function () {
 
                     // remove cite error
                     blurb.find('.mw-ext-cite-error').remove();
+                    $("#wp-feed").empty();
                     var wpText = blurb.find('p');
                     var trimLength = 10;
                     var wpDiv1 = $("<div>");
@@ -299,6 +315,7 @@ $(function () {
                     wpDiv2.append(wpSpanTitle, wpDivInfo, wpDiv3);
                     wpDiv1.append(wpDiv2);
                     $("#wp-feed").append(wpDiv1);
+                    
                 },
                 error: function (errorMessage) {
                 }
@@ -319,24 +336,27 @@ $(function () {
         // console.log(regexp2.test(location))
 
         if (regexp1.test(location)) {
-
-
             console.log("city, state");
-            //location = location.replace(/,\s?/g, " ");
             location = location.split(",");
-
             cityCode = location[0];
             stateCode = location[1];
-            // console.log(cityCode);
-            // console.log(stateCode);
             InputType = 1;
-
+            console.log(stateCode.length);
+            console.log(stateCode);
+            
+            
+            $("#tm-row").hide();
+            if (stateCode.length === 3) {
+                $("#tm-row").show();}
         } else if (regexp2.test(location)) {
+            $("#tm-row").show();
             // console.log("zip");
             zipCode = location;
             InputType = 2;
-
         }
+
+        
+
         findGeo(cityCode + "," + stateCode);
         findTickets();
         getWiki();
@@ -345,19 +365,9 @@ $(function () {
 
 
     $("#addMarker").on("click", function () {
-        console.log("add a marker");
-        
         //update db storage with new marker position
         addCommunityMarker(gm_geoLat, gm_geoLng);
-
     });
-
-    // $("#addMarkerInfo").on("click", function () {
-    //     console.log("add info to marker");
-    //     console.log(this);
-    //     //$("#commentmodal").open();
-
-    // });
 
     $("#commentmodal").on("submit", function () {
         console.log(this);
@@ -455,13 +465,13 @@ function findGeo(address) {
         async: true,
         dataType: "json",
         success: function (response) {
-            console.log(response.results);
+            // console.log(response.results);
             //check length of response results
             if (response.results.length !== 0) {
                 gm_geoLat = response.results[0].geometry.location.lat;
                 gm_geoLng = response.results[0].geometry.location.lng;
 
-                console.log("Location: " + gm_geoLat, ", " + gm_geoLng);
+                // console.log("Location: " + gm_geoLat, ", " + gm_geoLng);
                 updatePosition();
             }
         },
@@ -548,7 +558,7 @@ function populateCommunityMarkers() {
     if (gm_markers.length === 0) {
         // Origins, anchor positions and coordinates of the marker increase in the X
         // direction to the right and in the Y direction down.
-        
+
         //get a snapshot of the database 
         db.ref().once("value", function (snapshot) {
             if (snapshot.val().community) {
