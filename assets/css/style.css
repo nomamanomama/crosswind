@@ -221,6 +221,11 @@ Can hide scroll bar if we come up with alt ui */
     width:90%; 
 }
 
+
+#commentmodal {
+    padding: 40px;
+}
+
 /* .carousel {
 transform: translateY(0px);
 } */
@@ -260,4 +265,5 @@ height: 400px;
     text-shadow: 1px 1px 4px #bfbfbf;
     
 }
+
 

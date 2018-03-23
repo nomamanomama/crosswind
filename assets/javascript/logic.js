@@ -21,6 +21,8 @@ firebase.initializeApp(config);
 
 // create a variable for the Firebase database
 var db = firebase.database();
+
+var commentsRef = db.ref('comments');
 // Initialize the FirebaseUI Widget using Firebase.
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
@@ -36,7 +38,7 @@ var uiConfig = {
         uiShown: function () {
             // The widget is rendered.
             // Hide the loader.
-            document.getElementById('loader').style.display = 'none';
+            $('#loader').css({"display":"none"});
         }
     },
     // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
@@ -89,15 +91,16 @@ $(function () {
     });
 
 
+
+    //activate character count for add communitycomment form
+    $('input#commentBy, textarea#commentMsg').characterCounter();
+
 //autoplays the small facts from wiki
 autoplay();
     function autoplay() {
         $('.carousel').carousel('next');
         setTimeout(autoplay, 6500);
     }
-
-
-
 
     // ---------------------
     // ticket master API AJAX call function
@@ -362,18 +365,24 @@ autoplay();
 
 
     $("#addMarker").on("click", function () {
-        // console.log("add a marker");
-
-        var lat = gm_marker.getPosition().lat();
-        var lng = gm_marker.getPosition().lng();
         //update db storage with new marker position
-        addCommunityMarker(lat, lng);
-
+        addCommunityMarker(gm_geoLat, gm_geoLng);
     });
 
-
-
-
+    $("#commentmodal").on("submit", function () {
+        console.log(this);
+        var message = gm_message;
+        message.name = $("#commentBy").val();
+        message.comment = $("textarea#commentMsg").val();
+        console.log ("marker info: " + message.comment);
+        $(".modal").modal('close');
+        //update the content in the infowindow attached to marker
+        if (message.comment === ""){
+            message.comment = "Pinned Location";
+        } 
+        setMarkerInfo(gm_marker, message);
+        $("#commentForm").reset();
+    });
 
     findGeo(location);
     findTickets();
@@ -391,7 +400,52 @@ var gm_geoLng = -74.0059728;
 var gm_searchLocation;
 var gm_marker;
 var gm_markers = [];
+var gm_markerContent = "Hello World";
+var gm_lilman_image;
+var gm_lilman_shape;
+var gm_message = { comment: "", date: "", name: "" };
 
+
+function setMarkerInfo(marker, message) {
+    //console.log(marker + ", Message: " + message);
+    var dbkey = getMarkerDatabaseCommentKey(marker);
+    console.log("Setting db for marker: " + dbkey);
+    var d = new Date();  
+    message.date = d.getMonth() + "/" + d.getDate() + "/" + d.getFullYear();
+    
+    if(message.name === ""){ 
+        message.name = "anon";
+    }
+
+    console.log("date: " + message.date + " name: " + message.name + " message: " + message.comment);
+    db.ref('comments/' + dbkey).push({"comment": message.comment, "date": message.date, "by": message.name});
+
+    //create empty content window
+    var gm_infowindow = new google.maps.InfoWindow({
+        content: message.comment + ",  by: " + message.name + " " + message.date
+    });
+    gm_marker.addListener('click', function () {
+        gm_infowindow.open(gm_map, marker);
+    });
+}
+
+function getMarkerInfo (marker) {
+    var dbkey = getMarkerDatabaseCommentKey(marker);
+    var message = gm_message;
+    var info = [];
+    db.ref('comments/' + dbkey).once("value", function (snapshot) {
+        if(snapshot.val()){
+            snapshot.val().forEach(element => {
+                message.comment = JSON.parse(snapshot.val().element.comments);
+                message.date = snapshot.val().element.date; 
+                message.name = snapshot.val().element.name;
+                info.push(message);
+            });
+            
+        }
+    });
+    return info;
+}
 
 function findGeo(address) {
 
@@ -426,18 +480,32 @@ function initMap() {
         zoom: 8
     });
 
-    gm_marker = new google.maps.Marker({
-        position: gm_searchLocation,
-        map: gm_map
-    });
+    gm_lilman_image = {
+        url: './assets/images/windsock.png',
+        // This marker is 32 pixels wide by 32 pixels high.
+        size: new google.maps.Size(50, 50),
+        // The origin for this image is (0, 0).
+        origin: new google.maps.Point(0, 0),
+        // The anchor for this image is the base of the flagpole at (16, 32).
+        anchor: new google.maps.Point(25, 50)
+    };
+
+    // Shapes define the clickable region of the icon. The type defines an HTML
+    // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+    // The final coordinate closes the poly by connecting to the first coordinate.
+    gm_lilman_shape = {
+        coords: [17, 4, 48, 1, 48, 5, 23, 15, 25, 48, 1, 49, 1, 16, 17, 4],
+        type: 'poly'
+    };
 }
 
 //update the map location to new search location
 function updatePosition() {
     gm_searchLocation = new google.maps.LatLng(gm_geoLat, gm_geoLng);
     //set a marker at the current position
-    gm_marker.setPosition(gm_searchLocation);
+    //gm_marker.setPosition(gm_searchLocation);
     gm_map.setCenter(gm_searchLocation);
+    gm_map.setZoom(8);
 }
 
 //store gm_markers as string in database key community
@@ -448,10 +516,11 @@ function addCommunityMarker(lat, lng) {
     if (gm_markers.indexOf(latLng) === -1)
         gm_markers.push(latLng);
 
+    //update database to add marker
     db.ref().once("value", function (snapshot) {
         var markers = [];
         if (snapshot.val()) {
-            if (snapshot.val().community) {
+            if (snapshot.child('community').exists()) {
                 markers = JSON.parse(snapshot.val().community);
             }
             //check if position is already in community board
@@ -463,6 +532,15 @@ function addCommunityMarker(lat, lng) {
             }
         }
     });
+    //update screen to show marker
+    gm_marker = new google.maps.Marker({
+         position: gm_searchLocation,
+         map: gm_map,
+         icon: gm_lilman_image,
+         shape: gm_lilman_shape
+    });
+
+    
 }
 
 //get existing favorites from database community key
@@ -472,26 +550,13 @@ function populateCommunityMarkers() {
     if (gm_markers.length === 0) {
         // Origins, anchor positions and coordinates of the marker increase in the X
         // direction to the right and in the Y direction down.
-        var image = {
-            url: './assets/images/windsock-v5.png',
-            // This marker is 32 pixels wide by 32 pixels high.
-            size: new google.maps.Size(50, 50),
-            // The origin for this image is (0, 0).
-            origin: new google.maps.Point(0, 0),
-            // The anchor for this image is the base of the flagpole at (16, 32).
-            anchor: new google.maps.Point(25, 50)
-        };
-        // Shapes define the clickable region of the icon. The type defines an HTML
-        // <area> element 'poly' which traces out a polygon as a series of X,Y points.
-        // The final coordinate closes the poly by connecting to the first coordinate.
-        var shape = {
-            coords: [17, 4, 48, 1, 48, 5, 23, 15, 25, 48, 1, 49, 1, 16, 17, 4],
-            type: 'poly'
-        };
+
         //get a snapshot of the database 
         db.ref().once("value", function (snapshot) {
             if (snapshot.val().community) {
+                //get list of locations to create markers
                 gm_markers = JSON.parse(snapshot.val().community);
+                
                 //create google markers to display in community map
                 gm_markers.forEach(element => {
                     var latLng = element.split(",");
@@ -499,11 +564,59 @@ function populateCommunityMarkers() {
                     var marker = new google.maps.Marker({
                         position: (pos),
                         map: gm_map,
-                        icon: image,
-                        shape: shape
+                        icon: gm_lilman_image,
+                        shape: gm_lilman_shape
+                    });
+                    var dbkey = getMarkerDatabaseCommentKey(marker);
+                    //get comment from db for this location if it exists
+                    var exists = snapshot.child("comments/"+dbkey).exists();
+                    
+                    if (exists){
+                        //var markerComments = snapshot.child('comments/' + dbkey).val();
+                        var numComments = snapshot.child('comments/' + dbkey).numChildren();
+                        console.log(numComments + " comments exist for key: " + dbkey);
+                        let arr = [];
+                        snapshot.child("comments/" + dbkey).forEach(childSnapshot => {
+                            arr.push(childSnapshot.val());
+                        });
+                        console.log (arr);
+                        var comment = '';
+                        arr.forEach(element => {
+                            comment += element.comment + ", by: " + element.by + " " + element.date + "\n\r";
+                        });
+                        
+                    }
+                    
+                    //TODO: add a link in info window to add comment
+                    //gm_markerContent += "<a href='#'>add comment</a>";
+                    
+                    //create info window for markers
+                    var gm_infowindow = new google.maps.InfoWindow({
+                        content: comment
+                    });
+                    //add event listener to show info window on click
+                    marker.addListener('click', function (){
+                        //console.log(infowindow);
+                        gm_infowindow.open(gm_map, marker);
                     });
                 });
             }
         });
     }
 }
+
+function getMarkerDatabaseCommentKey (marker){
+    var lat = marker.getPosition().lat();
+    var lng = marker.getPosition().lng();
+    var key = lat.toString() + "," + lng.toString();
+    console.log(key);
+    key = key.replace(/\.\s?/g,"Z");
+    console.log("Key: " + key);
+    return key;
+}
+
+// function onMarkerClicked (marker, infowindow) {
+//     //console.log(infowindow);
+//     gm_marker = marker;
+//     infowindow.open(gm_map, gm_marker);
+// }
