@@ -381,15 +381,7 @@ autoplay();
             message.comment = "Pinned Location";
         } 
         setMarkerInfo(gm_marker, message);
-    });
-
-    commentsRef.on("child_added", function (snapshot) {
-        // //get the sender and message and append to screen
-        // key = snapshot.key;
-        // var chatDiv = $("<div>").html(chat.sender + ": " + chat.message);
-        // console.log($("#chatHistory"));
-        // $("#chatHistory").append(chatDiv);
-        // $("#chatHistory").scrollTop = 400;
+        $("#commentForm").reset();
     });
 
     findGeo(location);
@@ -528,7 +520,7 @@ function addCommunityMarker(lat, lng) {
     db.ref().once("value", function (snapshot) {
         var markers = [];
         if (snapshot.val()) {
-            if (snapshot.val().community) {
+            if (snapshot.child('community').exists()) {
                 markers = JSON.parse(snapshot.val().community);
             }
             //check if position is already in community board
@@ -590,7 +582,7 @@ function populateCommunityMarkers() {
                         console.log (arr);
                         var comment = '';
                         arr.forEach(element => {
-                            comment += element.comment + ", by: " + element.by + " " + element.date;
+                            comment += element.comment + ", by: " + element.by + " " + element.date + "\n\r";
                         });
                         
                     }

@@ -87,16 +87,13 @@
         </form>
         <!-- GOOGLE MAPS -->
         <div class="container">
-            <div id="map-controls">
-                <button type="submit" id="addMarker" class="waves-effect waves-light btn modal-trigger" href="#commentmodal">Pin it</button>
-            </div>
             <div id="commentmodal" class="modal">
                 <div class="modal-content">
                     <div id="cityBoardName">
             
                     </div>
                     <div class="row" id="cityBoard">
-                        <form class="col s12">
+                        <form id="commentForm" class="col s12">
                             <div class="row">
                                 <div class="input-field col s6">
                                     <input placeholder="Anonymous" id="commentBy" type="text" data-length="10">
@@ -105,7 +102,7 @@
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <textarea id="commentMsg" class="materialize-textarea" data-length="120"></textarea>
+                                    <textarea id="commentMsg" class="materialize-textarea" data-length="40"></textarea>
                                     <label for="commentMsg">Message</label>
                                 </div>
                             </div>
@@ -126,7 +123,7 @@
                 </div>
                 <div class="col s1">
                     <div id="addMarker-row">
-                        <a class="btn-floating btn-large tooltipped" data-position="right" data-delay="50" data-tooltip="Add Your Location" type="submit" id="addMarker" value="foo">
+                        <a class="btn-floating btn-large tooltipped modal-trigger" data-position="right" data-delay="50" data-tooltip="Add Your Location" type="submit" id="addMarker" value="foo" href="#commentmodal">
                             <img class="material-icons" id="tiny-sock" src="./assets/images/tiny-sock-38px.png">
                         </a>
                     </div>
