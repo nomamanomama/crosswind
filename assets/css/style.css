@@ -217,3 +217,7 @@ Can hide scroll bar if we come up with alt ui */
 .about-card .container {
     width:90%; 
 }
+
+#commentmodal {
+    padding: 40px;
+}

@@ -346,31 +346,31 @@ $(function () {
 
     $("#addMarker").on("click", function () {
         console.log("add a marker");
-
-        //allow comments for this pin
-        $("#addMarkerInfo").removeClass("disabled");
         
         //update db storage with new marker position
         addCommunityMarker(gm_geoLat, gm_geoLng);
 
-        
-
     });
 
-    $("#addMarkerInfo").on("click", function () {
-        console.log("add info to marker");
-        console.log(this);
-        //$("#commentmodal").open();
+    // $("#addMarkerInfo").on("click", function () {
+    //     console.log("add info to marker");
+    //     console.log(this);
+    //     //$("#commentmodal").open();
 
-    });
+    // });
 
     $("#commentmodal").on("submit", function () {
         console.log(this);
         var message = gm_message;
         message.name = $("#commentBy").val();
-        message.comment = $("#commentMsg").val();
+        message.comment = $("textarea#commentMsg").val();
+        console.log ("marker info: " + message.comment);
         $(".modal").modal('close');
-        if (message.comment != "") setMarkerInfo(gm_marker, message);
+        //update the content in the infowindow attached to marker
+        if (message.comment === ""){
+            message.comment = "Pinned Location";
+        } 
+        setMarkerInfo(gm_marker, message);
     });
 
     commentsRef.on("child_added", function (snapshot) {
@@ -407,9 +407,24 @@ var gm_message = { comment: "", date: "", name: "" };
 function setMarkerInfo(marker, message) {
     //console.log(marker + ", Message: " + message);
     var dbkey = getMarkerDatabaseCommentKey(marker);
-    var date = dateFormat(new Date(), 'm-d-Y');  
-    if(message.name === "") message.name = "anon"
+    console.log("Setting db for marker: " + dbkey);
+    var d = new Date();  
+    message.date = d.getMonth() + "/" + d.getDate() + "/" + d.getFullYear();
+    
+    if(message.name === ""){ 
+        message.name = "anon";
+    }
+
+    console.log("date: " + message.date + " name: " + message.name + " message: " + message.comment);
     db.ref('comments/' + dbkey).push({"comment": message.comment, "date": message.date, "by": message.name});
+
+    //create empty content window
+    var gm_infowindow = new google.maps.InfoWindow({
+        content: message.comment + ",  by: " + message.name + " " + message.date
+    });
+    gm_marker.addListener('click', function () {
+        gm_infowindow.open(gm_map, marker);
+    });
 }
 
 function getMarkerInfo (marker) {
@@ -523,11 +538,7 @@ function addCommunityMarker(lat, lng) {
          shape: gm_lilman_shape
     });
 
-    //create empty content window
-    var gm_infowindow = new google.maps.InfoWindow({
-        content: "Hello World"
-    });
-    gm_marker.addListener('click', onMarkerClicked(gm_marker, gm_infowindow));
+    
 }
 
 //get existing favorites from database community key
@@ -557,7 +568,7 @@ function populateCommunityMarkers() {
                     var dbkey = getMarkerDatabaseCommentKey(marker);
                     //get comment from db for this location if it exists
                     var exists = snapshot.child("comments/"+dbkey).exists();
-                    gm_markerComment = $("<div>");
+                    
                     if (exists){
                         //var markerComments = snapshot.child('comments/' + dbkey).val();
                         var numComments = snapshot.child('comments/' + dbkey).numChildren();
@@ -567,10 +578,9 @@ function populateCommunityMarkers() {
                             arr.push(childSnapshot.val());
                         });
                         console.log (arr);
-
+                        var comment = '';
                         arr.forEach(element => {
-                            var comment = $("<p>").text(element.comment + ", by: " + element.name + " " + element.date);
-                        gm_markerComment.append(comment);
+                            comment += element.comment + ", by: " + element.by + " " + element.date;
                         });
                         
                     }
@@ -580,10 +590,13 @@ function populateCommunityMarkers() {
                     
                     //create info window for markers
                     var gm_infowindow = new google.maps.InfoWindow({
-                        content: gm_markerContent
+                        content: comment
                     });
                     //add event listener to show info window on click
-                    marker.addListener('click', onMarkerClicked(marker, gm_infowindow));
+                    marker.addListener('click', function (){
+                        //console.log(infowindow);
+                        gm_infowindow.open(gm_map, marker);
+                    });
                 });
             }
         });
@@ -600,8 +613,8 @@ function getMarkerDatabaseCommentKey (marker){
     return key;
 }
 
-function onMarkerClicked (marker, infowindow) {
-    //console.log(infowindow);
-    gm_marker = marker;
-    infowindow.open(gm_map, gm_marker);
-}
+// function onMarkerClicked (marker, infowindow) {
+//     //console.log(infowindow);
+//     gm_marker = marker;
+//     infowindow.open(gm_map, gm_marker);
+// }
