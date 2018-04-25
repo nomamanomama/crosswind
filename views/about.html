@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CROSSWIND</title>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Materialize CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Poiret+One" rel="stylesheet">
+    <!-- Firebase Style Sheet -->
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css" />
+    <!-- Style Sheet -->
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+    <!-- font awesome for social media -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S"
+        crossorigin="anonymous">
+
+</head>
+
+<body>
+    <!-- NAV BAR STARTS -->
+    <nav>
+        <div class="nav-wrapper z-depth-2 navbar-fixed nice-color">
+            <a href="/" class="brand-logo center">CROSSWIND</a>
+            <a href="#" data-activates="mobile-side-nav" class="button-collapse">
+                <i class="material-icons">menu</i>
+            </a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li>
+                    <a class="modal-trigger" href="#loginmodal">LOG IN</a>
+                </li>
+                <li>
+                    <a href="/">HOME</a>
+                </li>
+                <li>
+                    <a href="#">SETTINGS</a>
+                </li>
+            </ul>
+            <!-- mobile side menu, needs jquery to initialize -->
+            <ul id="mobile-side-nav" class="side-nav">
+                <li>
+                    <a href="#">LOG IN</a>
+                </li>
+                <li>
+                    <a href="/about">ABOUT</a>
+                </li>
+                <li>
+                    <a href="#">SETTINGS</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- team member cards -->
+    <div class="container">
+        <div class="row">
+            <h2 id="about-title">MEET THE TEAM</h2>
+        </div>
+
+        <div class="row" id="about-card-row">
+            <div class="col s12 m4 about-card" id="middle-card">
+                <div class="container">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="./assets/images/RG-Pic.jpg">
+
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title" id="Name1">Rebecca Gemeinhardt</span>
+                            <p>I am an ambitious graphic designer with extensive experience and education. I am currently searching for my happy place at the
+                                intersection of design and development. </p>
+                        </div>
+                        <div class="card-action">
+                            <div>
+                                <ul class="sm-btns">
+                                    <li>
+                                        <a target="_blank" href="https://rebeccagem.github.io/Bootstrap-Portfolio/" class="btn-floating">
+                                            <i class="fas fa-home fa-3x"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a target="_blank" href="https://github.com/rebeccagem" class="btn-floating">
+                                            <i class="fab fa-github-alt fa-2x"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a target="_blank" href="https://www.linkedin.com/in/rebecca-gemeinhardt/" class="btn-floating">
+                                            <i class="fab fa-linkedin fa-2x"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m4 about-card" id="middle-card">
+                <div class="container">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="./assets/images/CD-Pic.jpg">
+
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title" id="Name1">Christopher Demeke</span>
+                            <p>I grew up in Houston and went to school for engineering in Austin “Hook’em Horns”.  A few things about me is I like sports mainly basketball and soccer. I love to read fiction any thing in the Geek, Nerd, Adventure spectrum if your looking for recommendations just contact me.</p>
+                        </div>
+                        <div class="card-action">
+                            <div>
+                                <ul class="sm-btns">
+                                    <li>
+                                        <a target="_blank" href="https://cdemeke1227.github.io/Basic-Portfolio/index.html" class="btn-floating">
+                                            <i class="fas fa-home fa-3x"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a target="_blank" href="https://github.com/Cdemeke1227" class="btn-floating">
+                                            <i class="fab fa-github-alt fa-2x"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a target="_blank" href="https://www.linkedin.com/in/christopher-demeke/" class="btn-floating">
+                                            <i class="fab fa-linkedin fa-2x"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m4 about-card" id="middle-card">
+                <div class="container">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="./assets/images/KK-Pic.jpg">
+
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title" id="Name1">Kathy Kennedy</span>
+                            <p>I have always loved problem-solving and design, and I possess an incessant desire to learn. I graduated from UT Austin with a degree in Architecture. I am a member of the software team for an engineering firm in the oil and gas industry.</p>
+                        </div>
+                        <div class="card-action">
+                            <div>
+                                <ul class="sm-btns">
+                                    <li>
+                                        <a target="_blank" href="https://nomamanomama.github.io/Basic-Portfolio/index.html" class="btn-floating">
+                                            <i class="fas fa-home fa-3x"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a target="_blank" href="https://github.com/nomamanomama" class="btn-floating">
+                                            <i class="fab fa-github-alt fa-2x"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a target="_blank" href="https://www.linkedin.com/in/kathy-kennedy-8526867/" class="btn-floating">
+                                            <i class="fab fa-linkedin fa-2x"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Firebase sign-in widget-->
+        <div id="loginmodal" class="modal">
+            <div class="modal-content">
+                <div id="firebaseui-auth-container"></div>
+                <div id="loader">Loading...</div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- JQuery -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <!-- JavaScript for Materialize -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+        <!-- Firebase Realtime DB  -->
+        <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+
+        <!-- Firebase Authentication -->
+        <script src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script>
+
+        <!-- Google Maps API  -->
+        <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7qKO6Pu0BX0_Hh7xtqJrFBqCR1hxegDo&callback=initMap" async
+            defer></script> -->
+
+        <!-- JavaScript File -->
+        <!-- <script src="./assets/javascript/logic.js"></script> -->
+
+</body>
+
+</html>

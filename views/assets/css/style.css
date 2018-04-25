@@ -1,0 +1,269 @@
+
+body{
+    background-color:#7bb5a1;
+}
+
+#gm-input-location {
+    margin-bottom: 0px;
+}
+
+.btn {
+    margin: 5px;
+}
+
+#gm-row {
+    background-color: #f4fffe;
+    padding: 0px 14px;
+}
+
+#tm-row {
+    background-color: #e0fcf9;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#wp-row {
+    background-color: #c6efeb;
+}
+
+#wp-2-row {
+    background-color: #a1d1cc;
+}
+
+.row {
+    margin: 0px;
+}
+
+.nice-color {
+    background-color: #153834;
+}
+
+nav .brand-logo {
+    font-family: 'Poiret One', 'Buda', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 4.5rem;
+    text-shadow: 2px 2px 1px #000000;
+}
+
+nav ul a {
+    font-family: 'open sans', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: .8rem;
+    color: #e0fcf9;
+}
+
+#map {
+    width: 100%;
+    height: 400px;
+    background-color: grey;
+}
+
+.tm-card {
+    min-width: 250px;
+    margin: 10px;
+
+}
+
+#tm-feed {
+    display: flex;
+    min-width: 100%;
+    min-height: 200px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+#left-scroll {
+z-index: 100;
+display: flex;
+  }
+
+#right-scroll-col,
+#left-scroll-col {
+height:300px;
+display: flex;
+flex-direction: column;
+justify-content:center;
+align-items: center;
+}
+
+#right-scroll {
+    padding:0rem;
+      }
+
+
+.row .col.s1{
+    width:0;
+}
+
+.row .col{
+    padding:0px;
+}
+/* 
+Can hide scroll bar if we come up with alt ui */
+
+  #tm-feed::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel .indicators .indicator-item.active{
+      background-color: #153834;
+  }
+
+  .carousel .indicators .indicator-item{
+      background-color: rgba(15, 112, 96, 0.5);
+  }
+
+  .wp-title {
+      text-align: left;
+  }
+
+  .wp-content {
+      text-align: left;
+      margin-bottom: 50px;
+  }
+
+  .wp-card{
+      overflow-y: auto;
+      max-height: 400px;
+  }
+
+  .card .card-content .wp-card{
+    padding:50px;
+  }
+
+  .carousel .indicators {
+      padding:0;
+      margin:0;
+      /* background-color: #ffffff; */
+      background-color: #295550;
+  }
+
+  #Name1 {
+      color: #153834;
+      font-size: 24px;
+      
+      padding:0px;
+      font-family: 'Poiret One', 'Buda', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      font-size: 1.5rem;
+      font-weight: bold;
+  }
+
+  #btn2 {
+      margin-left:150px;
+  }
+
+  /* .fixed-action-btn{
+      position: unset;
+  } */
+
+  /* .btn-floating {
+      vertical-align: bottom;
+      margin-top: 180px;
+  } */
+
+  .sm-btns {
+      display: flex;
+      justify-content: space-evenly;
+
+  }
+
+  #about-title {
+    font-family: 'Poiret One', 'Buda', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 2.3rem;
+    font-weight: bold;
+    margin-bottom:10px;
+  }
+
+/* #about-card-row {
+    display:flex;
+  }  */
+
+  .btn-floating {
+      background-color: #153834;
+  }
+
+  .tiny-facts {
+      background-color: #295550;
+      /* height: 100%; */
+  }
+
+ .wp-2-card-text {
+    text-shadow: 1.5px 1.5px 1px #272626;
+ }
+
+  .wp-2-card-title {
+      color: #ffffff;
+      font-size: 1.5rem;
+      margin: 0;
+      font-family: 'Poiret One', 'Buda', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 1.5px 1.5px 1px #272626;
+      margin-bottom: 10px;
+  }
+
+.card{
+    height: 360px;
+}
+.card-action {
+    margin-top: 10px;
+}
+.about-card .card {
+    height:unset;
+}
+
+#wpInfo {
+    height: auto;
+}
+
+.about-card .container {
+    width:90%; 
+}
+
+
+#commentmodal {
+    padding: 40px;
+}
+
+/* .carousel {
+transform: translateY(0px);
+} */
+.carousel .carousel-item {
+    display: none;
+    width: 400px;
+    height: 300px;
+    position: absolute;
+    top: 0;
+    left: 0px;
+}
+
+#addMarker-row {
+display: flex;
+flex-direction: column;
+justify-content:center;
+align-items: center;
+height: 400px;
+}
+
+#tiny-sock{
+    vertical-align: middle;
+
+}
+
+#wp-row .card .card-content p{
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#wp-row .card a{
+    color: #295550;
+}
+
+#wp-row .card a:hover{
+    color: #31635d;
+    text-shadow: 1px 1px 4px #bfbfbf;
+    
+}
+
+
